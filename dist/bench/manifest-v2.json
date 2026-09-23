@@ -1,0 +1,22 @@
+{
+  "benchmark": "OutcomeBench 2.0",
+  "version": "2.0.0",
+  "run_mode": "deterministic_browser_reference",
+  "dataset": {
+    "id": "outcomebench.synthetic.hotel.v2",
+    "frozen": true,
+    "case_count": 24,
+    "development_count": 16,
+    "blind_holdout_count": 8,
+    "sha256": "5f39fb8b9196295c804d10df5acaca2997f09cef0af0ee9c3d400e1c708ceeb5"
+  },
+  "evaluators": [
+    {"id": "outcome_assurance_v2", "version": "2.0.0", "code_path": "app.js#evaluateCase"},
+    {"id": "prompt_only_heuristic", "version": "1.0.0", "code_path": "app.js#evaluateCase"}
+  ],
+  "metrics": ["verified_outcome_rate", "avoidable_regret_rate", "violation_detection", "questions_per_purchase", "verified_value_delta_usd", "evidence_completeness"],
+  "failure_taxonomy": ["hidden_fee", "nonrefundable_swap", "merchant_mismatch", "merchant_alias", "price_change", "quantity_change", "channel_mismatch", "benefit_ineligible", "missing_evidence", "duplicate_event", "out_of_order"],
+  "uncertainty": {"method": "wilson_95_interval", "report_small_n_warning": true},
+  "reproducibility": {"seed": 2048, "runtime": "browser-es2022", "manifest_required": true, "same_code_path_for_all_splits": true},
+  "notice": "Measured results apply only to the bundled synthetic fixtures, not production performance."
+}

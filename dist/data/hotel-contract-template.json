@@ -1,0 +1,55 @@
+{
+  "schema_id": "oa://contracts/hotel-booking/1.2.0",
+  "contract_id": "oa_demo_hy_2048",
+  "version": "1.2.0",
+  "status": "draft",
+  "assurance_level": "decision_sensitive",
+  "approved_fields": {
+    "domain": "travel.hotel",
+    "check_in": "2026-09-24",
+    "constraints": {
+      "refundable_until_local": "18:00",
+      "final_total_usd_max": 400,
+      "distance_from_landmark_miles_max": null
+    },
+    "preferences": {
+      "quality_floor": "4_star",
+      "quality_over_lowest_price": true
+    },
+    "value_policy": {
+      "objective": "minimize_effective_cost",
+      "include_only_deterministically_eligible_value": true
+    }
+  },
+  "clarification_policy": {
+    "method": "expected_decision_regret",
+    "question_cost_usd": 5,
+    "ask_when": "expected_regret_gt_question_cost"
+  },
+  "evidence_policy": {
+    "required_claims": ["merchant_identity", "final_amount", "refundability", "distance", "benefit_eligibility"],
+    "allowed_states": ["verified", "pending", "inferred", "unobservable", "mismatch"],
+    "retention_days": 395
+  },
+  "observability": {
+    "merchant_identity": "required",
+    "final_amount": "required",
+    "refundability": "required",
+    "distance": "eventual",
+    "benefit_eligibility": "eventual"
+  },
+  "protocol_bindings": [
+    {"protocol": "ace", "adapter_version": "0.1.0-demo"},
+    {"protocol": "ap2", "adapter_version": "0.2.0-demo"},
+    {"protocol": "ucp", "adapter_version": "2026-01-11-demo"},
+    {"protocol": "acp", "adapter_version": "2026-09-demo"}
+  ],
+  "provenance": {
+    "hash_algorithm": "sha256",
+    "contract_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "compiler_version": "outcome-compiler/2.0.0",
+    "policy_bundle_version": "assurance-policy/1.1.0",
+    "model_id": "language-parser-04",
+    "prompt_hash": "sha256:49ce8ad2"
+  }
+}
