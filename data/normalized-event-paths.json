@@ -1,0 +1,33 @@
+{
+  "normalization_version": "oa.events/1.0.0",
+  "trace_id": "2f1c9e8aa8e94e03b4c10d9482f4d032",
+  "paths": {
+    "ap2": [
+      {"sequence": 1, "event_name": "intent.compiled", "source": "outcome_compiler", "source_type": "internal", "claim": "contract_hash"},
+      {"sequence": 2, "event_name": "contract.approved", "source": "trusted_surface", "source_type": "internal", "claim": "approved_fields"},
+      {"sequence": 3, "event_name": "checkout.proposed", "source": "ap2.checkout_mandate", "source_type": "protocol", "claim": "merchant_cart"},
+      {"sequence": 4, "event_name": "payment.authorized", "source": "ap2.payment_receipt", "source_type": "protocol", "claim": "payment_authorization"},
+      {"sequence": 5, "event_name": "order.confirmed", "source": "merchant.order", "source_type": "merchant", "claim": "booking_terms"},
+      {"sequence": 6, "event_name": "settlement.posted", "source": "amex.settlement", "source_type": "enterprise", "claim": "final_amount"},
+      {"sequence": 7, "event_name": "benefit.observed", "source": "membership.router", "source_type": "enterprise", "claim": "benefit_eligibility"}
+    ],
+    "ucp": [
+      {"sequence": 1, "event_name": "intent.compiled", "source": "outcome_compiler", "source_type": "internal", "claim": "contract_hash"},
+      {"sequence": 2, "event_name": "contract.approved", "source": "trusted_surface", "source_type": "internal", "claim": "approved_fields"},
+      {"sequence": 3, "event_name": "checkout.proposed", "source": "ucp.shopping.checkout", "source_type": "protocol", "claim": "merchant_cart"},
+      {"sequence": 4, "event_name": "payment.authorized", "source": "ucp.payment.handler", "source_type": "protocol", "claim": "payment_authorization"},
+      {"sequence": 5, "event_name": "order.confirmed", "source": "ucp.order", "source_type": "protocol", "claim": "booking_terms"},
+      {"sequence": 6, "event_name": "settlement.posted", "source": "amex.settlement", "source_type": "enterprise", "claim": "final_amount"},
+      {"sequence": 7, "event_name": "benefit.observed", "source": "membership.router", "source_type": "enterprise", "claim": "benefit_eligibility"}
+    ],
+    "acp": [
+      {"sequence": 1, "event_name": "intent.compiled", "source": "outcome_compiler", "source_type": "internal", "claim": "contract_hash"},
+      {"sequence": 2, "event_name": "contract.approved", "source": "trusted_surface", "source_type": "internal", "claim": "approved_fields"},
+      {"sequence": 3, "event_name": "checkout.proposed", "source": "acp.checkout", "source_type": "protocol", "claim": "merchant_cart"},
+      {"sequence": 4, "event_name": "payment.authorized", "source": "acp.payment", "source_type": "protocol", "claim": "payment_authorization"},
+      {"sequence": 5, "event_name": "order.confirmed", "source": "acp.webhook", "source_type": "protocol", "claim": "booking_terms"},
+      {"sequence": 6, "event_name": "settlement.posted", "source": "amex.settlement", "source_type": "enterprise", "claim": "final_amount"},
+      {"sequence": 7, "event_name": "benefit.observed", "source": "membership.router", "source_type": "enterprise", "claim": "benefit_eligibility"}
+    ]
+  }
+}

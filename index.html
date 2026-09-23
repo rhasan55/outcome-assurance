@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A working Outcome Assurance prototype: compile fuzzy intent into a portable contract, route Membership value, normalize commerce events, verify outcomes independently, and measure the result.">
+  <meta name="theme-color" content="#07111d">
+  <title>Outcome Assurance Lab — Contract → Proof</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307111d'/%3E%3Cpath d='M17 34l10 10 21-25' fill='none' stroke='%23caff5a' stroke-width='7' stroke-linecap='square'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#lab">Skip to outcome lab</a>
+  <header class="topbar">
+    <a class="brand" href="#lab" aria-label="Outcome Assurance Lab home"><span class="brand-mark">OA</span><span><strong>OUTCOME ASSURANCE</strong><small>CONTRACT → PROOF</small></span></a>
+    <nav aria-label="Primary navigation">
+      <a class="active" href="#lab">Journey</a><a href="#contract">Contract</a><a href="#verifier">Verifier</a><a href="#bench">OutcomeBench</a><a href="#boundary">Boundary</a>
+    </nav>
+    <div class="system-state"><i></i><span>Prototype online</span><b>v2.0</b></div>
+  </header>
+  <main>
+    <section class="lab" id="lab" aria-labelledby="lab-title">
+      <div class="lab-heading">
+        <div><p class="eyebrow">LIVE EXECUTABLE PATH · SYNTHETIC HOTEL JOURNEY</p><h1 id="lab-title">Turn a request into a <em>testable outcome.</em></h1></div>
+        <p>Language proposes meaning. Deterministic policy decides. An independent verifier proves what happened.</p>
+      </div>
+      <div class="journey-rail" aria-label="Outcome lifecycle">
+        <button class="journey-step active" data-step="compile"><span>01</span><b>Compile</b><small>Intent → fields</small></button>
+        <button class="journey-step" data-step="clarify"><span>02</span><b>Clarify</b><small>Regret-aware</small></button>
+        <button class="journey-step" data-step="optimize"><span>03</span><b>Optimize</b><small>Member value</small></button>
+        <button class="journey-step" data-step="approve"><span>04</span><b>Approve</b><small>Freeze + hash</small></button>
+        <button class="journey-step" data-step="observe"><span>05</span><b>Observe</b><small>Adapter events</small></button>
+        <button class="journey-step" data-step="verify"><span>06</span><b>Verify</b><small>Independent proof</small></button>
+      </div>
+      <div class="workbench">
+        <aside class="request-pane">
+          <div class="pane-label"><span>PLAIN-LANGUAGE REQUEST</span><span>LLM BOUNDARY</span></div>
+          <blockquote>“Book me a really nice <mark>refundable</mark> hotel <mark>near Hudson Yards</mark> tomorrow. Keep the <mark>final cost under $400</mark> and use whatever <mark>Amex value</mark> makes sense.”</blockquote>
+          <div class="language-note"><span>✦</span><div><b>Language only</b><p>The model extracts candidate fields and uncertainty. It never approves money, computes eligibility, or verifies the result.</p></div></div>
+          <button class="primary-action" id="compileButton">Compile outcome contract <span>↘</span></button>
+          <div class="mini-provenance"><span>MODEL</span><b>language-parser-04</b><span>PROMPT</span><b>sha256:49ce…8ad2</b></div>
+        </aside>
+        <section class="contract-pane" id="contract" aria-labelledby="contract-title">
+          <div class="pane-label"><span>CONTRACT PREVIEW</span><span id="contractStatus" class="status pending">DRAFT</span></div>
+          <div class="contract-head">
+            <div><small>PORTABLE INTERFACE</small><h2 id="contract-title">hotel_booking / <b>1.2.0</b></h2></div>
+            <div class="hash-chip"><span>SHA-256</span><code id="shortHash">compile to hash</code></div>
+          </div>
+          <div class="contract-rows" id="contractRows" aria-live="polite"><div class="empty-contract"><span>{ }</span><p>Compile the request to create approved fields, observability requirements, and evidence policy.</p></div></div>
+          <div class="contract-actions"><button class="text-button" id="viewJson" disabled>View live JSON</button><button class="text-button" id="approveContract" disabled>Approve + freeze</button></div>
+        </section>
+        <aside class="assurance-pane" aria-labelledby="assurance-title">
+          <div class="pane-label"><span>REGRETWARE</span><span>POLICY AS CODE</span></div>
+          <h2 id="assurance-title">Assurance level</h2>
+          <div class="assurance-dial"><svg viewBox="0 0 160 92" role="img" aria-label="Decision-sensitive assurance level"><path d="M16 78a64 64 0 0 1 128 0" pathLength="100"/><path class="dial-value" d="M16 78a64 64 0 0 1 128 0" pathLength="100"/><line x1="80" y1="78" x2="125" y2="42"/><circle cx="80" cy="78" r="7"/></svg><strong>DECISION<br>SENSITIVE</strong></div>
+          <div class="tier-list" id="tierList">
+            <button data-tier="observer"><span>Observer</span><small>Read-only</small></button><button data-tier="low"><span>Low consequence</span><small>Auto</small></button><button class="selected" data-tier="decision"><span>Decision-sensitive</span><small>Ask if winner flips</small></button><button data-tier="high"><span>High consequence</span><small>Explicit approval</small></button><button data-tier="weak"><span>Weak evidence</span><small>Constrain action</small></button><button data-tier="recovery"><span>Recovery</span><small>Package proof</small></button>
+          </div>
+          <div class="policy-formula"><span>ASK WHEN</span><code>expected_regret &gt; question_cost</code></div>
+        </aside>
+      </div>
+      <div id="stagePanel" class="stage-panel" aria-live="polite"></div>
+    </section>
+    <section class="verifier-section" id="verifier" aria-labelledby="verifier-title">
+      <div class="section-intro dark-intro">
+        <div><p class="eyebrow">SEPARATION OF DUTIES</p><h2 id="verifier-title">The buyer cannot <em>grade its own work.</em></h2></div>
+        <p>The purchasing agent proposes and acts. A separately enforced verifier receives only the frozen contract and normalized event log. It can issue evidence states; it cannot alter intent.</p>
+      </div>
+      <div class="boundary-diagram" aria-label="Purchasing agent and independent verifier trust boundary">
+        <article><span class="service-kicker">WRITE ACCESS</span><h3>Purchasing agent</h3><ul><li>Candidate search</li><li>Commerce actions</li><li>Protocol messages</li></ul><small>Cannot write verifier store</small></article>
+        <div class="trust-cut"><b>ONE-WAY</b><span>frozen contract →</span><span>event log →</span><i>TRUST BOUNDARY</i></div>
+        <article class="verifier-service"><span class="service-kicker">READ-ONLY INPUT</span><h3>Outcome verifier</h3><ul><li>Hash + schema validation</li><li>Idempotent claim evaluation</li><li>Receipt + recovery package</li></ul><small>Cannot rewrite approved contract</small></article>
+      </div>
+      <div class="verifier-console">
+        <div class="console-controls">
+          <div class="control-block"><label>Protocol adapter</label><div class="segmented" id="adapterButtons"><button data-adapter="ap2" class="active">AP2</button><button data-adapter="ucp">UCP</button><button data-adapter="acp">ACP</button></div><p>Different source envelopes. One normalized outcome event model.</p></div>
+          <div class="control-block"><label for="failureMode">Failure injector</label><select id="failureMode"><option value="none">Clean settlement</option><option value="hidden_fee">Hidden $45 fee</option><option value="nonrefundable_swap">Refundability changed</option><option value="missing_amount">Settlement unobservable</option><option value="pending_benefit">Benefit still pending</option><option value="agent_overwrite">Agent attempts overwrite</option></select><p>Runs against the same verifier code path.</p></div>
+          <button class="run-button" id="runVerifier">Run normalized path <span>→</span></button>
+        </div>
+        <div class="event-stream" id="eventStream"><div class="event-empty"><span>◎</span><p>Approve the contract, then run an adapter path.</p></div></div>
+        <div class="receipt" id="receiptPanel">
+          <div class="receipt-top"><div><p>LIVING TRUST RECEIPT</p><h3 id="receiptVerdict">Waiting for evidence</h3></div><span id="receiptState" class="receipt-state pending">PENDING</span></div>
+          <div class="receipt-meta"><span>RECEIPT</span><code id="receiptId">—</code><span>IDEMPOTENCY</span><code id="idempotencyState">not run</code></div>
+          <div class="claim-list" id="claimList"><p class="claim-empty">Claims appear here with explicit evidence states.</p></div>
+          <div class="receipt-actions"><button id="rerunVerifier" disabled>Re-run same events</button><button id="openRecovery" disabled>Open recovery package</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="registry-section" id="registry" aria-labelledby="registry-title">
+      <div class="section-intro">
+        <div><p class="eyebrow">OUTCOME CONTRACT REGISTRY</p><h2 id="registry-title">A schema is a <em>product boundary.</em></h2></div>
+        <p>Human-readable rows and the machine-readable object share one version, one hash, one approval record, and one evidence policy. Domain adapters extend fields without changing the verifier contract.</p>
+      </div>
+      <div class="registry-grid">
+        <article class="version-stack"><div class="stack-head"><span>DOMAIN SCHEMAS</span><a href="./schemas/outcome-contract.schema.json" target="_blank" rel="noreferrer">Open JSON Schema ↗</a></div><button class="schema-version active"><b>hotel_booking</b><span>1.2.0 · stable</span><i>23 Sep 2026</i></button><button class="schema-version"><b>retail_purchase</b><span>0.8.0 · preview</span><i>12 Sep 2026</i></button><button class="schema-version"><b>dining_reservation</b><span>0.5.0 · draft</span><i>04 Sep 2026</i></button><div class="version-rule"><span>VERSION POLICY</span><p>Patch: evidence mappings · Minor: additive fields · Major: breaking meaning</p></div></article>
+        <article class="component-map">
+          <div class="component primary"><span>01</span><div><b>Outcome compiler</b><small>Language → typed candidate fields</small></div><em>LLM-assisted</em></div>
+          <div class="component"><span>02</span><div><b>Regretware engine</b><small>Question value → assurance tier</small></div><em>Deterministic</em></div>
+          <div class="component"><span>03</span><div><b>Membership value router</b><small>Eligibility → effective cost</small></div><em>Deterministic</em></div>
+          <div class="component"><span>04</span><div><b>Protocol adapter layer</b><small>ACE / AP2 / UCP / ACP → normalized events</small></div><em>Deterministic</em></div>
+          <div class="component"><span>05</span><div><b>Independent verifier</b><small>Frozen contract + log → claims</small></div><em>Separate role</em></div>
+          <div class="component"><span>06</span><div><b>Recovery repository</b><small>Receipt + provenance → servicing package</small></div><em>Least privilege</em></div>
+        </article>
+        <article class="ops-card"><div class="ops-head"><p>OPERATING ENVELOPE</p><span>PROPOSED SLOs</span></div><div class="ops-metric"><strong>&lt; 150 ms</strong><span>p95 deterministic verification</span></div><div class="ops-metric"><strong>99.95%</strong><span>verifier availability target</span></div><div class="ops-metric"><strong>&lt; 0.1%</strong><span>duplicate side-effect budget</span></div><div class="ops-metric"><strong>395 days</strong><span>demo evidence retention policy</span></div><div class="ops-note">Targets for design review—not measured production performance.</div></article>
+      </div>
+      <div class="rollout-strip"><div><span>0</span><b>Replay</b><small>Frozen historical fixtures</small></div><i>→</i><div><span>1</span><b>Shadow</b><small>No customer action</small></div><i>→</i><div><span>2</span><b>Advisory</b><small>Surface receipt only</small></div><i>→</i><div><span>3</span><b>Guarded</b><small>Block high-confidence mismatch</small></div><i>→</i><div><span>4</span><b>Scaled</b><small>Domain-by-domain SLO gate</small></div></div>
+    </section>
+
+    <section class="bench-section" id="bench" aria-labelledby="bench-title">
+      <div class="section-intro dark-intro">
+        <div><p class="eyebrow">OUTCOMEBENCH 2.0</p><h2 id="bench-title">Claims become <em>measured evidence.</em></h2></div>
+        <p>A frozen synthetic gold set, a sealed holdout partition, a prompt-only baseline, adversarial failures, uncertainty reporting, and one manifest. Both evaluators run through the same harness.</p>
+      </div>
+      <div class="bench-shell">
+        <aside class="manifest-card"><div class="manifest-head"><span>RUN MANIFEST</span><b>FROZEN</b></div><dl><dt>Dataset</dt><dd>hotel.v2</dd><dt>Cases</dt><dd>24 synthetic</dd><dt>Development</dt><dd>16</dd><dt>Blind holdout</dt><dd>8</dd><dt>Seed</dt><dd>2048</dd><dt>Uncertainty</dt><dd>Wilson 95%</dd></dl><a href="./bench/manifest-v2.json" target="_blank" rel="noreferrer">Inspect manifest ↗</a><button id="runBench">Run OutcomeBench <span>→</span></button></aside>
+        <div class="bench-results">
+          <div class="bench-status"><div><span id="benchPulse"></span><b id="benchStatus">Ready to run</b></div><code id="benchHash">dataset hash pending</code></div>
+          <div class="metric-grid" id="metricGrid">
+            <article><span>VERIFIED OUTCOME RATE</span><strong>—</strong><small>Correct terminal classification</small></article><article><span>VIOLATION DETECTION</span><strong>—</strong><small>Known adversarial failures found</small></article><article><span>QUESTIONS / PURCHASE</span><strong>—</strong><small>Decision-sensitive only</small></article><article><span>VERIFIED VALUE DELTA</span><strong>—</strong><small>Observed Member value</small></article><article><span>EVIDENCE COMPLETENESS</span><strong>—</strong><small>Required claims observable</small></article><article><span>AVOIDABLE REGRET RATE</span><strong>—</strong><small>Wrong winner not prevented</small></article>
+          </div>
+          <div class="baseline-compare"><div><span>EVALUATOR</span><span>Outcome Assurance v2</span><span>Prompt-only heuristic</span></div><div><b>Same cases</b><span id="oaScore">—</span><span id="baselineScore">—</span></div><div><b>Holdout classification</b><span id="oaHoldout">—</span><span id="baselineHoldout">—</span></div></div>
+          <p class="bench-caveat">Results are computed live from bundled synthetic fixtures and are not Amex production claims. The “blind” split demonstrates the evaluation interface; a production holdout must live outside the deployable bundle.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="boundary-section" id="boundary" aria-labelledby="boundary-title">
+      <div class="section-intro">
+        <div><p class="eyebrow">PRECISE OWNERSHIP</p><h2 id="boundary-title">Complement the rails. <em>Own the outcome.</em></h2></div>
+        <p>Outcome Assurance consumes protocol facts and enterprise evidence. It does not replace authorization, identity, mandate signing, checkout transport, payment credentials, or order lifecycle standards.</p>
+      </div>
+      <div class="boundary-table" role="table" aria-label="Protocol capability boundary">
+        <div class="boundary-row header" role="row"><span>Layer</span><span>What it contributes</span><span>What Outcome Assurance adds</span></div>
+        <div class="boundary-row" role="row"><b>AMEX ACE</b><span>Agent registration, account enablement, Intent Intelligence, payment credentials, Cart Context, purchase protection direction.</span><strong>Membership-aware outcome contract, value routing, independent post-action proof.</strong></div>
+        <div class="boundary-row" role="row"><b>GOOGLE AP2</b><span>Signed checkout/payment mandates and receipts; deterministic verification of authorized constraints.</span><strong>Typed task definition before mandate creation and outcome reconciliation after payment.</strong></div>
+        <div class="boundary-row" role="row"><b>UCP</b><span>Capability negotiation and standardized discovery, checkout, orders, fulfillment and post-purchase operations.</span><strong>Protocol-neutral success criteria and evidence states portable across UCP merchants.</strong></div>
+        <div class="boundary-row" role="row"><b>ACP</b><span>Programmatic agent–seller checkout, credential relay, order events and merchant-owned processing.</span><strong>Approved meaning, counterfactual value delta, independent verifier and recovery package.</strong></div>
+      </div>
+      <div class="owned-not-owned"><article><p>OUTCOME ASSURANCE UNIQUELY OWNS</p><ul><li>Portable outcome contract</li><li>Regret-aware clarification policy</li><li>Membership value counterfactual</li><li>Independent evidence-state verifier</li><li>Living receipt + recovery package</li><li>OutcomeBench measurement manifest</li></ul></article><article><p>EXPLICITLY OUT OF SCOPE</p><ul><li>Payment authorization or credentials</li><li>Agent identity or registration</li><li>Mandate signatures or cryptographic rails</li><li>Generic agent observability</li><li>Escrow, autonomous refunds, or disputes</li><li>Replacing merchant order systems</li></ul></article></div>
+      <div class="source-wall"><p>PRIMARY SOURCES · VERIFIED 23 SEP 2026</p><div><a href="https://www.americanexpress.com/en-us/newsroom/articles/innovation/american-express-debuts-agentic-commerce-experiences--ace--devel.html" target="_blank" rel="noreferrer"><b>01</b><span>American Express ACE</span><i>Official newsroom ↗</i></a><a href="https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md" target="_blank" rel="noreferrer"><b>02</b><span>Google AP2 specification</span><i>GitHub ↗</i></a><a href="https://www.shopify.com/ucp" target="_blank" rel="noreferrer"><b>03</b><span>Universal Commerce Protocol</span><i>Shopify ↗</i></a><a href="https://developers.openai.com/commerce" target="_blank" rel="noreferrer"><b>04</b><span>Agentic Commerce Protocol</span><i>OpenAI ↗</i></a><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.800-2.ipd.pdf" target="_blank" rel="noreferrer"><b>05</b><span>NIST benchmark practices</span><i>NIST ↗</i></a><a href="https://aclanthology.org/2026.findings-acl.2028/" target="_blank" rel="noreferrer"><b>06</b><span>Structured uncertainty + EVPI</span><i>ACL 2026 ↗</i></a><a href="https://opentelemetry.io/docs/specs/otel/logs/data-model/" target="_blank" rel="noreferrer"><b>07</b><span>OpenTelemetry logs model</span><i>Specification ↗</i></a><a href="https://slsa.dev/spec/v1.2/" target="_blank" rel="noreferrer"><b>08</b><span>SLSA provenance</span><i>Specification ↗</i></a></div></div>
+    </section>
+
+    <section class="judge-section" aria-labelledby="judge-title"><div><p class="eyebrow">HACKATHON EVIDENCE MAP</p><h2 id="judge-title">Built to win on <em>what gets scored.</em></h2></div><div class="judge-grid"><article><span>30%</span><h3>Feasibility + scalability</h3><p>Normalized adapters, deterministic core, service separation, idempotency, SLOs, retention and shadow rollout.</p></article><article><span>30%</span><h3>Innovation</h3><p>Portable outcome contract, regret-aware questions, independent proof and explicit evidence states.</p></article><article><span>30%</span><h3>Business-unit value</h3><p>Membership routing, transparent value delta, lower servicing reconstruction and measurable avoided regret.</p></article><article><span>10%</span><h3>Hack completeness</h3><p>One executable flow, two+ protocol paths, failure injection, live receipt, recovery and reproducible benchmark.</p></article></div></section>
+    <footer><div class="brand"><span class="brand-mark">OA</span><span><strong>OUTCOME ASSURANCE</strong><small>PERMISSION → DECISION → VALUE → PROOF</small></span></div><p>Internal hackathon prototype · Synthetic data · Research current to 23 Sep 2026</p><a href="#lab">Back to lab ↑</a></footer>
+  </main>
+  <aside class="recovery-drawer" id="recoveryDrawer" aria-labelledby="recoveryTitle" aria-hidden="true"><button class="drawer-close" id="closeRecovery" aria-label="Close recovery package">×</button><p class="eyebrow">RECOVERY REPOSITORY</p><h2 id="recoveryTitle">Evidence, without reconstruction.</h2><div id="recoveryItems"></div><div class="recovery-summary" id="recoverySummary"></div></aside>
+  <div class="modal" id="jsonModal" hidden role="dialog" aria-modal="true" aria-labelledby="jsonTitle"><div class="modal-card"><div class="modal-head"><div><p class="eyebrow">MACHINE-READABLE CONTRACT</p><h2 id="jsonTitle">Portable outcome contract</h2></div><button id="closeJson" aria-label="Close JSON dialog">×</button></div><pre><code id="jsonCode"></code></pre><div class="modal-actions"><button id="copyJson">Copy JSON</button><button id="downloadJson">Download .json</button></div></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://outcome-assurance.example/schemas/outcome-contract/1.2.0",
+  "title": "Portable Outcome Contract",
+  "description": "A protocol-neutral, versioned interface between human intent, a purchasing agent, commerce protocols, and an independent outcome verifier.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "contract_id", "version", "status", "assurance_level", "approved_fields", "evidence_policy", "observability", "provenance"],
+  "properties": {
+    "schema_id": {"type": "string", "pattern": "^oa://contracts/"},
+    "contract_id": {"type": "string", "minLength": 8},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "status": {"enum": ["draft", "approved", "superseded", "expired"]},
+    "assurance_level": {"enum": ["observer", "low_consequence", "decision_sensitive", "high_consequence", "weak_evidence", "recovery"]},
+    "approved_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain", "constraints", "preferences", "value_policy"],
+      "properties": {
+        "domain": {"type": "string"},
+        "constraints": {"type": "object"},
+        "preferences": {"type": "object"},
+        "value_policy": {"type": "object"}
+      }
+    },
+    "clarification_policy": {
+      "type": "object",
+      "required": ["method", "question_cost_usd", "ask_when"],
+      "properties": {
+        "method": {"const": "expected_decision_regret"},
+        "question_cost_usd": {"type": "number", "minimum": 0},
+        "ask_when": {"const": "expected_regret_gt_question_cost"}
+      }
+    },
+    "evidence_policy": {
+      "type": "object",
+      "required": ["required_claims", "allowed_states"],
+      "properties": {
+        "required_claims": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "allowed_states": {"type": "array", "items": {"enum": ["verified", "pending", "inferred", "unobservable", "mismatch"]}, "uniqueItems": true},
+        "retention_days": {"type": "integer", "minimum": 1}
+      }
+    },
+    "observability": {
+      "type": "object",
+      "additionalProperties": {"enum": ["required", "eventual", "optional", "unavailable"]}
+    },
+    "protocol_bindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["protocol", "adapter_version"],
+        "properties": {
+          "protocol": {"enum": ["ace", "ap2", "ucp", "acp", "merchant"]},
+          "adapter_version": {"type": "string"}
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["hash_algorithm", "contract_hash", "compiler_version", "policy_bundle_version"],
+      "properties": {
+        "hash_algorithm": {"const": "sha256"},
+        "contract_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "compiler_version": {"type": "string"},
+        "policy_bundle_version": {"type": "string"},
+        "model_id": {"type": "string"},
+        "prompt_hash": {"type": "string"}
+      }
+    }
+  }
+}
