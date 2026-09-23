@@ -1,6 +1,8 @@
-# Outcome Assurance Lab — hackathon prototype
+# Outcome Assurance — interactive prototype
 
 This is a static, front-end-only reference implementation. It has no backend, API keys, or build step.
+
+The interface is organized for a first-time user: one editable request, one decision-sensitive clarification, one transparent recommendation, and one independent receipt. Architecture, assurance tiers, rollout controls, protocol boundaries, and OutcomeBench are progressively disclosed under Technical details.
 
 The executable path demonstrates:
 
@@ -27,4 +29,6 @@ Then open `http://localhost:4173`.
 2. In the repository settings, enable Pages from the default branch and root folder.
 3. Open the generated Pages URL.
 
-The page is self-contained except for Google Fonts loaded from the public web. Primary claims link directly to official specifications and research. All Member, merchant, Offer, transaction, event, and settlement data is synthetic or illustrative. OutcomeBench results are measured only against the bundled synthetic fixtures and are not production-performance claims.
+The page uses the system font stack and needs no runtime API or external design assets. Primary claims link directly to official specifications and research. All Member, merchant, Offer, transaction, event, and settlement data is synthetic or illustrative. OutcomeBench results are measured only against the bundled synthetic fixtures and are not production-performance claims.
+
+See `DESIGN-REVIEW.md` for the before/after critique, scorecard, and remaining risks.
