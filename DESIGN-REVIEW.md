@@ -14,6 +14,9 @@ The redesigned site now behaves like a product demonstration instead of a hackat
 | Hackathon evidence map speaks to evaluators | Evidence map removed | Product surfaces should serve the user; judges can infer completeness from the working flow |
 | Fixed presentation-style copy | Editable request field and direct actions | Gives the visitor agency and makes the prototype feel testable |
 | Elaborate motion and decorative UI cues | Immediate press feedback and short property-specific transitions | Keeps feedback responsive without slowing a frequently used workflow |
+| Review action jumped directly to the answer | A 3-phase, 1.4-second review state shows extraction, regret testing, and evidence binding | Makes the system legible while the user waits and gives the delay an explanatory purpose |
+| ACE appeared only in a protocol table | Official status, Amex conceptual demo, capability-by-capability state, and a precise extension boundary | Grounds the concept in Amex’s current platform without pretending Outcome Assurance replaces it |
+| Synthetic metrics appeared only after opening OutcomeBench | A compact bridge maps existing ACE signals to new outcome measures, with a production-claim disclaimer | Shows why the new layer matters before asking a judge to inspect benchmark internals |
 
 ## Scorecard
 
@@ -28,7 +31,7 @@ The redesigned site now behaves like a product demonstration instead of a hackat
 | Mobile usability | 9.0/10 | Single-column flow, full-width actions, readable typography, and no horizontal overflow. |
 | Distinctiveness | 8.6/10 | Calm assurance-product character without decorative novelty competing with the proof. |
 
-**Overall: 9.1/10.** This is ready for hackathon demonstration and design review.
+**Overall UX/design score: 9.1/10.** This is ready for hackathon demonstration and design review. This score covers interface quality only; it is not the weighted hackathon score. See `HACKATHON-ASSESSMENT.md` for the evidence-adjusted 78/100 rubric judgment.
 
 ## Remaining risks
 
@@ -36,6 +39,7 @@ The redesigned site now behaves like a product demonstration instead of a hackat
 - Benchmark results are synthetic reference evidence, not production performance claims.
 - The technical disclosures should be observed in a short usability test to confirm that engineering judges discover the depth without prompting.
 - A production deployment still needs real enterprise event access, authorization boundaries, retention governance, and external holdout management.
+- The official ACE video is streamed from American Express; the surrounding text and source link preserve the core status explanation if media delivery is unavailable.
 
 ## Review basis
 

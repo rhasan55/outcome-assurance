@@ -6,18 +6,40 @@
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_id", "contract_id", "version", "status", "assurance_level", "approved_fields", "evidence_policy", "observability", "provenance"],
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "approved"}}},
+      "then": {"required": ["approved_at", "decision"]}
+    }
+  ],
   "properties": {
     "schema_id": {"type": "string", "pattern": "^oa://contracts/"},
     "contract_id": {"type": "string", "minLength": 8},
     "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "status": {"enum": ["draft", "approved", "superseded", "expired"]},
     "assurance_level": {"enum": ["observer", "low_consequence", "decision_sensitive", "high_consequence", "weak_evidence", "recovery"]},
+    "source_request": {"type": "string", "minLength": 1},
+    "approved_at": {"type": "string", "format": "date-time"},
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_candidate_id", "selected_merchant_id", "approved_total_usd", "expected_member_value_usd", "effective_cost_usd", "next_best_value_delta_usd"],
+      "properties": {
+        "selected_candidate_id": {"type": "string"},
+        "selected_merchant_id": {"type": "string"},
+        "approved_total_usd": {"type": "number", "minimum": 0},
+        "expected_member_value_usd": {"type": "number", "minimum": 0},
+        "effective_cost_usd": {"type": "number", "minimum": 0},
+        "next_best_value_delta_usd": {"type": "number", "minimum": 0}
+      }
+    },
     "approved_fields": {
       "type": "object",
       "additionalProperties": false,
       "required": ["domain", "constraints", "preferences", "value_policy"],
       "properties": {
         "domain": {"type": "string"},
+        "check_in": {"type": "string", "format": "date"},
         "constraints": {"type": "object"},
         "preferences": {"type": "object"},
         "value_policy": {"type": "object"}
@@ -38,7 +60,25 @@
       "properties": {
         "required_claims": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
         "allowed_states": {"type": "array", "items": {"enum": ["verified", "pending", "inferred", "unobservable", "mismatch"]}, "uniqueItems": true},
-        "retention_days": {"type": "integer", "minimum": 1}
+        "retention_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "default_days"],
+          "properties": {
+            "status": {"enum": ["requires_privacy_legal_approval", "approved"]},
+            "default_days": {"type": ["integer", "null"], "minimum": 1}
+          }
+        },
+        "access_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["writer_roles", "reader_roles", "purchasing_agent_write"],
+          "properties": {
+            "writer_roles": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "reader_roles": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "purchasing_agent_write": {"const": false}
+          }
+        }
       }
     },
     "observability": {

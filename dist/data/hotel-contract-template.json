@@ -29,7 +29,15 @@
   "evidence_policy": {
     "required_claims": ["merchant_identity", "final_amount", "refundability", "distance", "benefit_eligibility"],
     "allowed_states": ["verified", "pending", "inferred", "unobservable", "mismatch"],
-    "retention_days": 395
+    "retention_policy": {
+      "status": "requires_privacy_legal_approval",
+      "default_days": null
+    },
+    "access_policy": {
+      "writer_roles": ["outcome_verifier"],
+      "reader_roles": ["authorized_servicing", "authorized_audit"],
+      "purchasing_agent_write": false
+    }
   },
   "observability": {
     "merchant_identity": "required",

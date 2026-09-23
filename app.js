@@ -15,7 +15,8 @@ const state = {
   lastReceipt: null,
   receiptCache: new Map(),
   bench: null,
-  benchManifest: null
+  benchManifest: null,
+  reviewRunId: 0
 };
 
 const candidates = [
@@ -41,7 +42,8 @@ const fallbackTemplate = {
   evidence_policy: {
     required_claims: ['merchant_identity', 'final_amount', 'refundability', 'distance', 'benefit_eligibility'],
     allowed_states: ['verified', 'pending', 'inferred', 'unobservable', 'mismatch'],
-    retention_days: 395
+    retention_policy: { status: 'requires_privacy_legal_approval', default_days: null },
+    access_policy: { writer_roles: ['outcome_verifier'], reader_roles: ['authorized_servicing', 'authorized_audit'], purchasing_agent_write: false }
   },
   observability: { merchant_identity: 'required', final_amount: 'required', refundability: 'required', distance: 'eventual', benefit_eligibility: 'eventual' },
   protocol_bindings: [
@@ -102,6 +104,47 @@ function setProgress(stage) {
 
 function currentLimit() {
   return state.nearMiles ?? .5;
+}
+
+const reviewPhases = [
+  { title: 'Extract approved requirements', detail: 'Separate hard constraints, preferences, and observable claims.' },
+  { title: 'Test decision regret', detail: 'Compare plausible interpretations against the candidate set.' },
+  { title: 'Bind evidence policy', detail: 'Attach versions, approved fields, observability, and provenance.' }
+];
+
+function wait(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+function renderContractReview(activeIndex) {
+  const previewRows = [
+    ['Constraints', 'Refundability + final total', activeIndex > 0 ? 'Found' : 'Reading'],
+    ['Ambiguity', 'Quality + distance', activeIndex > 1 ? 'Tested' : activeIndex === 1 ? 'Testing' : 'Queued'],
+    ['Evidence', '5 required claims', activeIndex > 2 ? 'Bound' : activeIndex === 2 ? 'Binding' : 'Queued']
+  ];
+  byId('contractRows').innerHTML = `<div class="contract-review">${previewRows.map(([label, value, status], index) => `
+    <div class="contract-review-row ${index < activeIndex ? 'complete' : index === activeIndex ? 'current' : ''}">
+      <span>${label}</span><b>${value}</b><i>${status}</i>
+    </div>`).join('')}</div>`;
+}
+
+function renderReviewSequence(activeIndex) {
+  const completed = Math.min(activeIndex, reviewPhases.length);
+  byId('stagePanel').innerHTML = `
+    <article class="review-card" aria-labelledby="review-title">
+      <div class="review-heading">
+        <div><p class="section-label">Local deterministic demo</p><h3 id="review-title">Reviewing what success means…</h3></div>
+        <span>${completed} of ${reviewPhases.length}</span>
+      </div>
+      <ol class="review-steps">
+        ${reviewPhases.map((phase, index) => {
+          const status = index < activeIndex ? 'complete' : index === activeIndex ? 'current' : 'queued';
+          const marker = status === 'complete' ? '✓' : String(index + 1);
+          return `<li class="review-step ${status}"><span class="review-marker" aria-hidden="true">${marker}</span><div><b>${phase.title}</b><small>${phase.detail}</small></div><em>${status === 'complete' ? 'Complete' : status === 'current' ? 'Reviewing' : 'Queued'}</em></li>`;
+        }).join('')}
+      </ol>
+      <p class="review-note">The language model proposes fields. Deterministic policy decides when to ask, which option wins, and what evidence will count.</p>
+    </article>`;
 }
 
 function rankCandidates() {
@@ -242,18 +285,55 @@ function resetVerifier() {
 }
 
 async function compileContract() {
+  const request = byId('requestInput').value.trim();
+  if (!request) {
+    byId('requestInput').setAttribute('aria-invalid', 'true');
+    byId('requestInput').focus();
+    toast('Add a purchase request before review');
+    return;
+  }
+
+  const runId = ++state.reviewRunId;
+  const button = byId('compileButton');
+  const demo = byId('demo');
+  const reducedMotion = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const phaseDelay = reducedMotion ? 70 : 420;
+
+  byId('requestInput').removeAttribute('aria-invalid');
+  button.disabled = true;
+  button.textContent = 'Reviewing outcome…';
+  demo.setAttribute('aria-busy', 'true');
   state.contract = clone(state.contractTemplate || fallbackTemplate);
   state.contract.status = 'draft';
-  state.contract.source_request = byId('requestInput').value.trim();
+  state.contract.source_request = request;
   state.approvedContract = null;
   state.nearMiles = null;
-  byId('contractStatus').textContent = 'Needs review';
+  byId('contractStatus').textContent = 'Reviewing';
   byId('contractStatus').className = 'state-badge pending';
   byId('approveContract').textContent = 'Approve contract';
+  byId('approveContract').disabled = true;
+  byId('viewJson').disabled = true;
+  byId('shortHash').textContent = 'Computing after review';
+  resetVerifier();
+  renderContractReview(0);
+  renderReviewSequence(0);
+
+  for (let index = 1; index <= reviewPhases.length; index += 1) {
+    await wait(phaseDelay);
+    if (runId !== state.reviewRunId) return;
+    renderContractReview(index);
+    renderReviewSequence(index);
+  }
+
+  await wait(reducedMotion ? 40 : 160);
+  if (runId !== state.reviewRunId) return;
   renderContractRows();
   await syncContractHash();
-  resetVerifier();
+  byId('contractStatus').textContent = 'Needs review';
   renderClarification();
+  button.disabled = false;
+  button.textContent = 'Review the outcome again';
+  demo.removeAttribute('aria-busy');
   toast('Outcome contract ready for review');
 }
 
@@ -535,7 +615,7 @@ async function loadArtifacts() {
   }
 }
 
-byId('compileButton').addEventListener('click', compileContract);
+byId('compileButton').addEventListener('click', () => { void compileContract(); });
 byId('approveContract').addEventListener('click', approveContract);
 byId('viewJson').addEventListener('click', () => {
   if (!state.contract) return;

@@ -6,14 +6,15 @@
   <meta name="description" content="A working Outcome Assurance prototype that turns a plain-language request into an approved contract and an independently verified receipt.">
   <meta name="theme-color" content="#f5f5f7">
   <title>Outcome Assurance</title>
+  <link rel="preconnect" href="https://www.aexp-static.com">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23006fcf'/%3E%3Cpath d='M17 33l10 10 21-22' fill='none' stroke='white' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=7">
+  <link rel="stylesheet" href="./styles.css?v=8">
 </head>
 <body>
   <a class="skip-link" href="#demo">Skip to the demo</a>
   <header class="topbar">
     <a class="wordmark" href="#demo" aria-label="Outcome Assurance home"><span class="wordmark-icon" aria-hidden="true">OA</span><span>Outcome Assurance</span></a>
-    <nav aria-label="Primary navigation"><a href="#demo">Try the flow</a><a href="#verifier">Verify</a><a href="#details">Technical details</a></nav>
+    <nav aria-label="Primary navigation"><a href="#demo">Try the flow</a><a href="#verifier">Verify</a><a href="#ace-fit">ACE fit</a><a href="#details">Technical details</a></nav>
     <span class="prototype-label">Interactive prototype</span>
   </header>
 
@@ -75,6 +76,45 @@
       </div>
     </section>
 
+    <section class="ace-section" id="ace-fit" aria-labelledby="ace-title">
+      <div class="section-heading">
+        <div><p class="section-label">ACE + Outcome Assurance</p><h2 id="ace-title">Start where Amex is today.</h2></div>
+        <p>ACE establishes trusted agentic payments. Outcome Assurance begins after identity and authorization: it makes success testable, measurable, and recoverable.</p>
+      </div>
+      <div class="ace-grid">
+        <figure class="ace-media">
+          <video controls preload="metadata" poster="https://www.americanexpress.com/content/dam/amex/en-us/company/agentic-commerce/mov-argentic-commerce-ani_preivew_image.jpg">
+            <source src="https://www.aexp-static.com/company/agentic-commerce/mov-agentic-commerce-ani.mp4" type="video/mp4">
+            <track kind="captions" srclang="en" label="English" src="https://www.americanexpress.com/content/dam/amex/en-us/company/agentic-commerce/AmexAgenticCommerce.vtt">
+            Your browser does not support the video. <a href="https://www.americanexpress.com/en-us/company/agentic-commerce/" target="_blank" rel="noreferrer">View the official ACE overview</a>.
+          </video>
+          <figcaption>Official American Express conceptual demo. Features are under development, subject to change, and may vary by market. <a href="https://www.americanexpress.com/en-us/company/agentic-commerce/" target="_blank" rel="noreferrer">Open the source</a></figcaption>
+        </figure>
+        <div class="ace-status">
+          <div class="status-kicker"><span>Official status</span><time datetime="2026-09-23">September 2026</time></div>
+          <p>American Express lists 3 ACE specifications as available as of April 14, 2026, with 2 still under development.</p>
+          <div class="capability-list" role="list" aria-label="ACE developer kit capability status">
+            <div role="listitem"><span class="availability available">Available</span><b>Account Enablement</b><small>Register Cards with verified agents</small></div>
+            <div role="listitem"><span class="availability available">Available</span><b>Intent Intelligence</b><small>Capture intent for controls and disputes</small></div>
+            <div role="listitem"><span class="availability available">Available</span><b>Payment Credentials</b><small>Issue scoped, tokenized credentials</small></div>
+            <div role="listitem"><span class="availability developing">In development</span><b>Agent Registration</b><small>Verify agents on the Amex network</small></div>
+            <div role="listitem"><span class="availability developing">In development</span><b>Cart Context</b><small>Add cart details for validation and disputes</small></div>
+          </div>
+          <div class="boundary-statement"><span>Outcome Assurance owns</span><p>The portable outcome contract, decision-regret policy, deterministic Membership routing, independent outcome verification, claim-level receipt, and evidence-first recovery package.</p></div>
+        </div>
+      </div>
+      <div class="measurement-bridge">
+        <div class="measurement-heading"><div><p class="section-label">New measurement layer</p><h3>From transaction control to verified outcome.</h3></div><p>No production lift is claimed. These are synthetic prototype results and proposed pilot measures.</p></div>
+        <div class="measurement-table" role="table" aria-label="How Outcome Assurance extends ACE signals into outcome measures">
+          <div class="measurement-row header" role="row"><span>Existing signal</span><span>New outcome measure</span><span>Prototype evidence</span></div>
+          <div class="measurement-row" role="row"><b>Intent + approval</b><span>Questions per purchase</span><strong>1 targeted question</strong></div>
+          <div class="measurement-row" role="row"><b>Cart + order events</b><span>Verified Outcome Rate</span><strong>95.8% on 24 synthetic cases</strong></div>
+          <div class="measurement-row" role="row"><b>Membership context</b><span>Verified Value Delta</span><strong>$21 in this hotel decision</strong></div>
+          <div class="measurement-row" role="row"><b>Purchase protection</b><span>Violation detection</span><strong>90.0% synthetic detection</strong></div>
+        </div>
+      </div>
+    </section>
+
     <section class="details-section" id="details" aria-labelledby="details-title">
       <div class="section-heading compact-heading"><div><p class="section-label">Technical details</p><h2 id="details-title">Everything else, when you need it.</h2></div><p>The primary journey stays simple. Schemas, policy, rollout controls, benchmarks, and protocol boundaries remain inspectable.</p></div>
       <div class="disclosure-list">
@@ -90,14 +130,14 @@
           <summary><span>Service separation & rollout</span><small>Access, SLOs, shadow mode</small></summary>
           <div class="detail-content">
             <div class="service-boundary"><article><span>Buying agent</span><h3>Proposes & acts</h3><p>Searches candidates, sends commerce messages, and receives a read-only contract copy.</p></article><div class="boundary-arrow" aria-label="One-way contract and event flow">Frozen contract → events →</div><article><span>Outcome verifier</span><h3>Evaluates & records</h3><p>Validates hashes, evaluates claims, and writes receipts to a separate store.</p></article></div>
-            <div class="operations-grid"><div><strong>&lt;150 ms</strong><span>Proposed p95 verification target</span></div><div><strong>99.95%</strong><span>Proposed availability target</span></div><div><strong>&lt;0.1%</strong><span>Duplicate side-effect budget</span></div><div><strong>395 days</strong><span>Demo evidence retention</span></div></div>
+            <div class="operations-grid"><div><strong>&lt;150 ms</strong><span>Proposed p95 verification target</span></div><div><strong>99.95%</strong><span>Proposed availability target</span></div><div><strong>&lt;0.1%</strong><span>Duplicate side-effect budget</span></div><div><strong>Policy set</strong><span>Retention requires Privacy & Legal approval</span></div></div>
             <ol class="rollout-list"><li><span>1</span><b>Replay</b><small>Frozen fixtures</small></li><li><span>2</span><b>Shadow</b><small>No customer action</small></li><li><span>3</span><b>Advisory</b><small>Receipt only</small></li><li><span>4</span><b>Guarded</b><small>Block known mismatch</small></li><li><span>5</span><b>Scaled</b><small>Domain SLO gate</small></li></ol>
           </div>
         </details>
 
         <details>
           <summary><span>Protocol boundary</span><small>ACE, AP2, UCP, ACP</small></summary>
-          <div class="detail-content"><p class="detail-intro">Outcome Assurance consumes protocol facts. It does not replace authorization, identity, mandates, credentials, checkout transport, or merchant order systems.</p><div class="protocol-table" role="table" aria-label="Protocol capability boundary"><div class="protocol-row header" role="row"><span>Rail</span><span>Provides</span><span>Outcome Assurance adds</span></div><div class="protocol-row" role="row"><b>Amex ACE</b><span>Agent registration, account enablement, credentials, cart context</span><strong>Membership-aware intent and outcome proof</strong></div><div class="protocol-row" role="row"><b>AP2</b><span>Mandates, receipts, authorized constraints</span><strong>Task definition before payment and reconciliation after it</strong></div><div class="protocol-row" role="row"><b>UCP</b><span>Discovery, checkout, orders, fulfillment, post-purchase</span><strong>Portable success criteria across merchants</strong></div><div class="protocol-row" role="row"><b>ACP</b><span>Agent-to-seller checkout and order events</span><strong>Approved meaning, value delta, verifier, recovery</strong></div></div></div>
+          <div class="detail-content"><p class="detail-intro">Outcome Assurance consumes protocol facts. It does not replace authorization, identity, mandates, credentials, checkout transport, or merchant order systems.</p><div class="protocol-table" role="table" aria-label="Protocol capability boundary"><div class="protocol-row header" role="row"><span>Rail</span><span>Provides</span><span>Outcome Assurance adds</span></div><div class="protocol-row" role="row"><b>Amex ACE</b><span>Enablement, intent, credentials; registration and cart context are developing</span><strong>Membership-aware outcome semantics and independent proof</strong></div><div class="protocol-row" role="row"><b>AP2</b><span>Mandates, receipts, and authorized constraints</span><strong>Task definition before payment and reconciliation after it</strong></div><div class="protocol-row" role="row"><b>UCP</b><span>Discovery, checkout, orders, fulfillment, post-purchase</span><strong>Portable success criteria across merchants</strong></div><div class="protocol-row" role="row"><b>ACP</b><span>Structured merchant catalog and commerce connectivity</span><strong>Approved meaning, value delta, verifier, and recovery</strong></div></div></div>
         </details>
 
         <details id="bench">
@@ -121,6 +161,6 @@
   <dialog class="modal" id="jsonModal" aria-labelledby="jsonTitle"><div class="modal-heading"><div><p class="section-label">Portable object</p><h2 id="jsonTitle">Outcome contract JSON</h2></div><button class="icon-button" id="closeJson" aria-label="Close JSON dialog">×</button></div><pre><code id="jsonCode"></code></pre><div class="button-row"><button class="button secondary" id="copyJson">Copy JSON</button><button class="button primary" id="downloadJson">Download</button></div></dialog>
   <dialog class="modal recovery-modal" id="recoveryDrawer" aria-labelledby="recoveryTitle"><div class="modal-heading"><div><p class="section-label">Recovery package</p><h2 id="recoveryTitle">Ready for servicing</h2></div><button class="icon-button" id="closeRecovery" aria-label="Close recovery package">×</button></div><div class="recovery-items" id="recoveryItems"></div><p class="recovery-summary" id="recoverySummary"></p></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=3" defer></script>
+  <script src="./app.js?v=5" defer></script>
 </body>
 </html>
