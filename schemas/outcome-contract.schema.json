@@ -60,6 +60,16 @@
       "properties": {
         "required_claims": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
         "allowed_states": {"type": "array", "items": {"enum": ["verified", "pending", "inferred", "unobservable", "mismatch"]}, "uniqueItems": true},
+        "untrusted_context_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["merchant_free_text", "structured_event_fields", "may_change_approved_contract"],
+          "properties": {
+            "merchant_free_text": {"const": "quarantine"},
+            "structured_event_fields": {"const": "allowlisted"},
+            "may_change_approved_contract": {"const": false}
+          }
+        },
         "retention_policy": {
           "type": "object",
           "additionalProperties": false,

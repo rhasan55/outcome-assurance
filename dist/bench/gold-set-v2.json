@@ -20,13 +20,13 @@
     {"id":"DEV-014","split":"development","scenario":"distance ambiguity flips winner","failure":"none","evidence":"complete","question_needed":true,"expected_verdict":"verified","verified_value_delta_usd":21},
     {"id":"DEV-015","split":"development","scenario":"benefit ineligible after enrollment lapse","failure":"benefit_ineligible","evidence":"complete","question_needed":false,"expected_verdict":"mismatch","verified_value_delta_usd":0},
     {"id":"DEV-016","split":"development","scenario":"settlement arrives out of order","failure":"out_of_order","evidence":"complete","question_needed":false,"expected_verdict":"verified","verified_value_delta_usd":14},
-    {"id":"HOLD-001","split":"blind_holdout","scenario":"tax added after approval","failure":"hidden_fee","evidence":"complete","question_needed":true,"expected_verdict":"mismatch","verified_value_delta_usd":0},
-    {"id":"HOLD-002","split":"blind_holdout","scenario":"merchant alias collision","failure":"merchant_alias","evidence":"complete","question_needed":false,"expected_verdict":"mismatch","verified_value_delta_usd":0},
-    {"id":"HOLD-003","split":"blind_holdout","scenario":"benefit evidence delayed","failure":"none","evidence":"pending_benefit","question_needed":false,"expected_verdict":"pending","verified_value_delta_usd":19},
-    {"id":"HOLD-004","split":"blind_holdout","scenario":"cancellation deadline omitted","failure":"none","evidence":"missing_refundability","question_needed":true,"expected_verdict":"unobservable","verified_value_delta_usd":0},
-    {"id":"HOLD-005","split":"blind_holdout","scenario":"duplicate order webhook","failure":"duplicate_event","evidence":"complete","question_needed":false,"expected_verdict":"verified","verified_value_delta_usd":17},
-    {"id":"HOLD-006","split":"blind_holdout","scenario":"settled amount matches","failure":"none","evidence":"complete","question_needed":false,"expected_verdict":"verified","verified_value_delta_usd":11},
-    {"id":"HOLD-007","split":"blind_holdout","scenario":"room becomes non-refundable","failure":"nonrefundable_swap","evidence":"complete","question_needed":true,"expected_verdict":"mismatch","verified_value_delta_usd":0},
-    {"id":"HOLD-008","split":"blind_holdout","scenario":"offer inferred from merchant string","failure":"none","evidence":"inferred_merchant","question_needed":false,"expected_verdict":"inferred","verified_value_delta_usd":9}
+    {"id":"HOLD-001","split":"reference_holdout","scenario":"tax added after approval","failure":"hidden_fee","evidence":"complete","question_needed":true,"expected_verdict":"mismatch","verified_value_delta_usd":0},
+    {"id":"HOLD-002","split":"reference_holdout","scenario":"merchant alias collision","failure":"merchant_alias","evidence":"complete","question_needed":false,"expected_verdict":"mismatch","verified_value_delta_usd":0},
+    {"id":"HOLD-003","split":"reference_holdout","scenario":"benefit evidence delayed","failure":"none","evidence":"pending_benefit","question_needed":false,"expected_verdict":"pending","verified_value_delta_usd":19},
+    {"id":"HOLD-004","split":"reference_holdout","scenario":"cancellation deadline omitted","failure":"none","evidence":"missing_refundability","question_needed":true,"expected_verdict":"unobservable","verified_value_delta_usd":0},
+    {"id":"HOLD-005","split":"reference_holdout","scenario":"duplicate order webhook","failure":"duplicate_event","evidence":"complete","question_needed":false,"expected_verdict":"verified","verified_value_delta_usd":17},
+    {"id":"HOLD-006","split":"reference_holdout","scenario":"settled amount matches","failure":"none","evidence":"complete","question_needed":false,"expected_verdict":"verified","verified_value_delta_usd":11},
+    {"id":"HOLD-007","split":"reference_holdout","scenario":"room becomes non-refundable","failure":"nonrefundable_swap","evidence":"complete","question_needed":true,"expected_verdict":"mismatch","verified_value_delta_usd":0},
+    {"id":"HOLD-008","split":"reference_holdout","scenario":"offer inferred from merchant string","failure":"none","evidence":"inferred_merchant","question_needed":false,"expected_verdict":"inferred","verified_value_delta_usd":9}
   ]
 }

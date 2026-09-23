@@ -29,6 +29,11 @@
   "evidence_policy": {
     "required_claims": ["merchant_identity", "final_amount", "refundability", "distance", "benefit_eligibility"],
     "allowed_states": ["verified", "pending", "inferred", "unobservable", "mismatch"],
+    "untrusted_context_policy": {
+      "merchant_free_text": "quarantine",
+      "structured_event_fields": "allowlisted",
+      "may_change_approved_contract": false
+    },
     "retention_policy": {
       "status": "requires_privacy_legal_approval",
       "default_days": null

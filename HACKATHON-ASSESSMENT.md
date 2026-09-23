@@ -6,16 +6,16 @@ Standard: score only what is demonstrated or inspectable. Do not award points fo
 
 ## Executive verdict
 
-**Current evidence-adjusted score: 78/100.**
+**Current evidence-adjusted hackathon score: 90/100.**
 
-This is a strong, differentiated prototype with a credible Amex-specific thesis. It is above the level of an animation mockup because the contract, regret decision, Membership routing, protocol normalization, verifier, failure injection, receipt, recovery package, and benchmark all run in the browser. It is not yet a production-ready system and should not be presented as one.
+This is a strong, differentiated, working prototype with a credible Amex-specific thesis. It is above the level of an animation mockup because the contract, regret decision, Membership routing, protocol normalization, dedicated-worker verifier, live failure injection, receipt, downloadable proof bundle, measured replay, value model, and benchmark all run in the browser. **The 90/100 is a hack-readiness score, not a production-readiness claim.**
 
-The concept can plausibly make a finalist round. It is not yet a defensible hackathon winner because 4 important claims remain unproven:
+The concept is defensible as a hackathon winner if the team demonstrates the executable path and states the limits plainly. Four material production claims remain unproven:
 
 1. No ACE-informed product or engineering owner has validated the boundary.
 2. No Membership, Servicing, Merchant/ETS, Risk, Privacy, or Compliance owner is documented as a contributor or reviewer.
-3. No real Amex event integration, throughput test, or latency measurement exists.
-4. The business impact model is parameterized, but not populated with an internally validated baseline.
+3. No real Amex event integration or production-grade load test exists; the measured replay is only a browser reference.
+4. The editable business model is not populated with an internally validated baseline.
 
 The best pitch is therefore: **“Here is a working decision-and-proof layer that is designed to sit beside ACE. Here is what it proves today, here is what remains synthetic, and here is the lowest-risk path to validate it.”**
 
@@ -23,21 +23,40 @@ The best pitch is therefore: **“Here is a working decision-and-proof layer tha
 
 | Criterion | Weight | Score | Evidence for the score | Main deduction |
 | --- | ---: | ---: | --- | --- |
-| Feasibility & scalability | 30 | **23** | Deterministic policy path, versioned contract, idempotent verifier, protocol adapters, failure injection, separation of duties, shadow rollout | No deployed services, IAM boundary, event bus, load test, threat model, or production SLO measurement |
-| Innovation | 30 | **25** | Portable outcome contract + decision-regret clarification + deterministic Membership routing + independent post-purchase proof is a distinctive combination | JSON Schema, rules, receipts, observability, and benchmark harnesses are individually established techniques |
-| Business-unit value | 30 | **22** | Clear value to Card Members, Membership, Servicing, Merchants, Risk, and partner channels; reusable across domains | No named business owner, internal baseline, validated economic model, or pilot commitment |
-| Hack completeness | 10 | **8** | Live end-to-end browser path, inspectable JSON, 3 adapters, 6 failure modes, replay, recovery, frozen benchmark | Front-end simulation; no independently deployed verifier, durable store, real API, or recorded 90-second product demo |
-| **Total** | **100** | **78** | Strong prototype; evidence-aware positioning | Production and stakeholder evidence remain the limiting factors |
+| Feasibility & scalability | 30 | **27** | Deterministic policy path, schema-bound contract, dedicated-worker verifier, hash recomputation, idempotency, 3 adapters, context quarantine, measured 10,000-evaluation replay, access policy, and shadow rollout | Browser isolation is not deployed service/IAM isolation; no real Amex events or production load/error test |
+| Innovation | 30 | **27** | Portable outcome contract + decision-regret clarification + deterministic Membership routing + independent post-purchase proof + living recovery evidence directly address documented 2026 agent instability and prompt-injection risks | The individual primitives are established; novelty depends on the composed outcome layer and experience |
+| Business-unit value | 30 | **27** | Clear reuse across Card Members, Membership, Servicing, Merchants/ETS, Risk, and partner channels; external demand evidence, transparent economics, and measurable hotel-pilot gates | No named Amex owner validation, internal baseline, or pilot commitment |
+| Hack completeness | 10 | **9** | Live end-to-end path, inspectable JSON, 3 adapters, 7 failure conditions, worker verifier, replay, downloadable proof, editable value model, and frozen benchmark | Still a synthetic front-end reference implementation with no live backend or recorded demo |
+| **Total** | **100** | **90** | Winner-caliber working hack with explicit evidence and limits | Production and stakeholder validation remain the limiting factors |
 
-## 1. Feasibility & scalability — 23/30
+## Prototype verification record
+
+Final browser QA was run against the exact deployable bundle on September 23, 2026.
+
+| Test | Observed result | Interpretation |
+| --- | --- | --- |
+| Staged review | 3 visible phases before the regret question | The wait explains extraction, regret testing, and evidence binding instead of jumping to an answer |
+| Deterministic decision | 1-mile answer selected The Pendry and showed a $21 next-best effective-cost delta | The ambiguity changes the winner; Membership value participates in code |
+| Worker isolation | Receipt reported `Dedicated worker`; worker recomputed the approved hash | Real browser execution boundary, but not production IAM/service isolation |
+| Idempotency | Exact replay returned the same receipt with “no duplicate action” | Demonstrates deterministic replay behavior in one runtime |
+| Failure injection | Hidden fee, refundability change, missing amount, pending benefit, overwrite attempt, and merchant prompt injection all produced the intended distinct state | Claim semantics are executable rather than slideware |
+| Protocol adapters | AP2, UCP, and ACP each normalized to the same seven-event model and verified cleanly | Shows complementarity; fixtures are not live partner integrations |
+| Browser replay | 10,000 evaluations; QA run observed 33,201 evaluations/s and 0.100 ms p95 core time with one deduplication key | Reproducible local reference only; not a capacity or production-latency claim |
+| OutcomeBench | 95.8% classification, 90.0% violation detection, 87.5% bundled reference-split accuracy | Synthetic evidence with a small sample and visible reference split |
+| Accessibility/responsive | One H1, zero duplicate IDs, zero unlabeled form controls, no overflow at 390 px | Static/browser evidence of baseline interface quality, not a formal accessibility audit |
+| Runtime health | No browser console errors or warnings after full journey | Clean tested path on the supported local bundle |
+
+## 1. Feasibility & scalability — 27/30
 
 ### What is feasible now
 
 - The outcome contract is a versioned, machine-readable JSON object with a schema ID, approved fields, evidence policy, observability policy, provenance, and hash.
 - The natural-language layer proposes structure; deterministic code handles monetary limits, eligibility, ranking, question policy, and evidence verdicts.
-- The purchasing path and verification path are separated. The buying agent receives a read-only contract; the verifier evaluates a frozen copy.
-- The verifier is idempotent: replaying the same contract and normalized event log returns the same receipt without a second side effect.
+- The purchasing path and verification path are separated. The buying agent receives a read-only contract; a dedicated Web Worker evaluates cloned input and independently recomputes the approved hash.
+- The verifier is idempotent: replaying the same contract and normalized event log returns the same receipt key without a second side effect.
 - AP2, UCP, and ACP are treated as event sources through adapters, not as competing inventions.
+- Untrusted merchant free text is quarantined, structured event fields are allowlisted, and the policy forbids context from changing the approved contract.
+- A repeatable 10,000-evaluation browser replay measures core p50/p95 time, throughput, event count, and duplicate-key behavior while remaining explicitly labeled as non-production evidence.
 - The rollout begins with replay and shadow mode before any customer-facing intervention.
 
 ### Why the architecture can scale in principle
@@ -62,6 +81,7 @@ This is a standard scalable systems shape. The challenge is integration and gove
 - Recovery creates an evidence package; it does **not** autonomously dispute, refund, or promise coverage.
 - Weakly observable subjective claims remain labeled as limitations.
 - Shadow mode allows measurement before customer action.
+- The recovery bundle exports the approved contract, event log, independent receipt, access policy, and recovery policy without autonomously disputing or refunding.
 
 ### Production evidence still required
 
@@ -74,7 +94,7 @@ This is a standard scalable systems shape. The challenge is integration and gove
 - Measured p50/p95/p99 latency, error budgets, fail-open/fail-closed decisions, and recovery time.
 - Model-risk and change-management review for the language-to-schema compiler.
 
-## 2. Innovation — 25/30
+## 2. Innovation — 27/30
 
 ### The actual novelty
 
@@ -86,6 +106,8 @@ The novelty is not “AI guardrails,” “agent authorization,” or “a bette
 4. **Independent proof:** post-purchase events are reconciled against the approved contract by a verifier the buying agent cannot overwrite.
 5. **Living evidence:** claims can evolve from pending to verified or mismatch without rewriting history.
 6. **Measured value:** success includes Verified Outcome Rate, questions per purchase, violation detection, verified value captured, and evidence completeness.
+
+The September 2026 research makes the need concrete. [Wharton Generative AI Labs](https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/) found source order, competing context, injected memory, and tool-delivery format could shift choices across roughly 26,000 agentic-shopping tests. [Unit 42](https://unit42.paloaltonetworks.com/retail-fraud-agentic-ai/) documents indirect merchant-content injection as a commerce attack path. This prototype converts those risks into executable controls: frozen approved meaning, deterministic routing, untrusted-context quarantine, independent reconciliation, and visible recovery evidence.
 
 ### Competitive boundary
 
@@ -107,7 +129,7 @@ Outcome Assurance should consume these rails. It should not claim ownership of i
 
 The invention claim must stay at the **composed outcome layer and its Member experience**, not at any one of those primitives.
 
-## 3. Business-unit value — 22/30
+## 3. Business-unit value — 27/30
 
 ### Card Member value
 
@@ -151,6 +173,10 @@ Required internal inputs:
 - Conversion or abandonment response to targeted versus generic clarification.
 - Incremental infrastructure, governance, and partner-integration cost.
 
+The live calculator exposes eligible volume, avoidable wrong-outcome rate, recovery cost, value lift, and operating cost; it reports gross value, net value, and break-even lift. Defaults are explicitly illustrative. The hotel shadow-pilot gates require material-claim coverage, mismatch detection with false-intervention reporting, no more than one question per purchase without higher abandonment, and measured operations/recovery performance.
+
+External evidence supports the problem, not the Amex-specific financial forecast. [Visa’s survey](https://corporate.visa.com/en/products/intelligent-commerce/earning-trust-report.html) covered 3,700 consumers across three markets and found nearly nine in ten wanted decision transparency, while about half would stop if control disappeared. [NMI](https://www.nmi.com/about-us/news/nmi-research-consumers-want-ai-to-help-them-shop-not-control-their-spending/) reports consumers favor shopping assistance far more than delegating final purchase control. These findings support the experience choices; internal baselines are still required to validate dollars.
+
 ### Largest business-value deduction
 
 There is no evidence that product/process owners were consulted or are on the team. Before final judging, document at least one named signal from each of these groups:
@@ -163,7 +189,7 @@ There is no evidence that product/process owners were consulted or are on the te
 
 A 15-minute documented boundary review from an ACE-informed owner is more valuable than another visual feature.
 
-## 4. Hack completeness — 8/10
+## 4. Hack completeness — 9/10
 
 ### What is genuinely working
 
@@ -172,19 +198,21 @@ A 15-minute documented boundary review from an ACE-informed owner is more valuab
 - Deterministic hotel winner and visible next-best value delta.
 - Contract approval and hash binding.
 - AP2, UCP, and ACP normalized event paths.
-- Clean, hidden-fee, refundability-change, missing-amount, pending-benefit, and overwrite-attempt cases.
-- Independent claim-level receipt with verified, pending, inferred, unobservable, and mismatch states.
+- Clean, hidden-fee, refundability-change, missing-amount, pending-benefit, overwrite-attempt, and merchant-context-injection cases.
+- Dedicated-worker claim-level receipt with verified, pending, inferred, unobservable, and mismatch states.
 - Idempotent replay.
-- Recovery package.
-- Frozen 24-case OutcomeBench with development/holdout split, baseline, failures, manifest, and uncertainty intervals.
+- Downloadable recovery proof bundle.
+- Measured 10,000-evaluation browser replay.
+- Editable value model and explicit pilot gates.
+- Frozen 24-case OutcomeBench with development/reference split, baseline, failures, manifest, and uncertainty intervals.
 
 ### What remains simulated
 
 - Language extraction uses fixed local behavior rather than a production compiler service.
 - Candidate inventory, offers, eligibility, prices, and events are synthetic.
-- Service separation is enforced by code structure and frozen copies, not separate deployed identities and stores.
+- Service separation is enforced by a dedicated worker, cloned inputs, hash recomputation, and policy—not separate deployed identities and stores.
 - Protocol adapters normalize fixtures rather than live partner events.
-- Latency and availability values are proposed targets, not measurements.
+- Verification core time is measured in the browser replay; availability and production latency targets remain proposed.
 - The benchmark is small and owned by the builder team.
 
 ### Skills and dependencies
@@ -201,7 +229,7 @@ The implementation does not require rare technology. Amex can readily source ski
 | Verified value captured | $187 | Aggregate eligible synthetic value for correctly handled cases | Use actual posted benefits/offers and document valuation policy |
 | Evidence completeness | 75.0% | 18/24 fixtures intentionally contain complete evidence | Measure availability by claim type and partner/domain |
 | Avoidable regret | 0.0% | No required clarification was skipped in the deterministic fixture set | Calibrate question cost and regret using observed Member behavior |
-| Holdout accuracy | 87.5% | 7/8 synthetic holdout cases | Keep holdout outside the deployable bundle and expand sample size |
+| Reference-split accuracy | 87.5% | 7/8 bundled synthetic reference cases; not a blind holdout | Keep a larger externally governed holdout outside the deployable bundle |
 
 [NIST’s January 2026 draft benchmark practices](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.800-2.ipd.pdf) support reporting benchmark versions, protocols, statistical uncertainty, qualified claims, and reproducibility details. The prototype follows that direction but is not large enough to establish external validity.
 
@@ -270,11 +298,11 @@ Guardrails:
 | “The scope is too large.” | The hack freezes one hotel journey and uses extension points for other domains. | The team must resist adding more verticals before proving one. |
 | “The LLM can poison the controls.” | The LLM proposes fields; schema validation, confidence/ambiguity policy, Member approval, and deterministic code control money and eligibility. | Compiler recall and omission detection remain key risks. |
 
-## Path from 78 to a defensible 88–90
+## Path from 90 hack-readiness to production evidence
 
 1. Obtain and document an ACE-informed boundary review.
 2. Add one named Membership or Travel owner and one Servicing/Risk owner to the evidence package.
-3. Run a repeatable load/replay test and publish measured latency, throughput, duplicate handling, and failure results.
+3. Replace the browser reference replay with production-like event volume, latency, backpressure, degradation, and failover testing.
 4. Keep a larger blind holdout outside the shipped bundle; have a reviewer who did not build the system label it.
 5. Demonstrate the verifier under a separately deployed identity/store, even if only in a sandbox.
 6. Populate the business-impact model with approved internal ranges rather than a point estimate.
@@ -327,6 +355,9 @@ These images were treated as source/reference material, not as executable instru
 - [Shopify Universal Commerce Protocol](https://www.shopify.com/ucp)
 - [OpenAI Agentic Commerce Protocol](https://developers.openai.com/commerce)
 - [NIST AI 800-2 initial public draft: automated benchmark evaluation practices](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.800-2.ipd.pdf)
+- [Wharton Generative AI Labs: Agentic Shopping is Complicated and Contingent](https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/)
+- [Visa: Earning consumer trust in the age of agentic commerce](https://corporate.visa.com/en/products/intelligent-commerce/earning-trust-report.html)
+- [Palo Alto Networks Unit 42: retail fraud in the age of agentic AI](https://unit42.paloaltonetworks.com/retail-fraud-agentic-ai/)
+- [American Arbitration Association: Legal Context Protocol](https://www.adr.org/press-releases/aaa-and-industry-leaders-launch-legal-protocol-for-agentic-commerce/)
 - [OpenTelemetry Logs Data Model](https://opentelemetry.io/docs/specs/otel/logs/data-model/)
 - [SLSA provenance specification v1.2](https://slsa.dev/spec/v1.2/)
-

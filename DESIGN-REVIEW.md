@@ -17,6 +17,9 @@ The redesigned site now behaves like a product demonstration instead of a hackat
 | Review action jumped directly to the answer | A 3-phase, 1.4-second review state shows extraction, regret testing, and evidence binding | Makes the system legible while the user waits and gives the delay an explanatory purpose |
 | ACE appeared only in a protocol table | Official status, Amex conceptual demo, capability-by-capability state, and a precise extension boundary | Grounds the concept in Amex’s current platform without pretending Outcome Assurance replaces it |
 | Synthetic metrics appeared only after opening OutcomeBench | A compact bridge maps existing ACE signals to new outcome measures, with a production-claim disclaimer | Shows why the new layer matters before asking a judge to inspect benchmark internals |
+| Security and scale were architecture promises | A live merchant-injection quarantine, dedicated-worker runtime, and measured 10,000-evaluation replay sit inside technical details | Turns three claims into inspectable behavior without burdening the first-time journey |
+| Business value lived in a narrative document | An editable calculator exposes assumptions, break-even value, and pilot gates | Lets a judge challenge the economics instead of accepting a point estimate |
+| Recovery was a visual summary | Recovery exports the approved contract, events, independent receipt, and policies as JSON | Makes the artifact portable and usable beyond the screen |
 
 ## Scorecard
 
@@ -26,12 +29,12 @@ The redesigned site now behaves like a product demonstration instead of a hackat
 | Task discoverability | 9.2/10 | The primary request and action are visible in the first desktop viewport; mobile becomes a single linear flow. |
 | Trust and evidence clarity | 9.3/10 | Approval, hash, event log, claim states, idempotency, and recovery remain explicit and distinct. |
 | Visual craft | 9.0/10 | Consistent spacing, system typography, restrained color, focus states, press feedback, and reduced-motion support. |
-| Technical completeness | 9.2/10 | Contract JSON, regret-aware question, deterministic routing, adapters, independent verifier, recovery, benchmark, and rollout plan remain executable or inspectable. |
+| Technical completeness | 9.5/10 | Contract JSON, regret-aware question, deterministic routing, adapters, dedicated-worker verifier, proof export, replay measurement, benchmark, and rollout plan are executable or inspectable. |
 | Accessibility | 9.1/10 | Semantic controls, labels, one H1, visible focus, skip link, reduced-motion/transparency/contrast modes, and no horizontal overflow at 390 px. |
 | Mobile usability | 9.0/10 | Single-column flow, full-width actions, readable typography, and no horizontal overflow. |
 | Distinctiveness | 8.6/10 | Calm assurance-product character without decorative novelty competing with the proof. |
 
-**Overall UX/design score: 9.1/10.** This is ready for hackathon demonstration and design review. This score covers interface quality only; it is not the weighted hackathon score. See `HACKATHON-ASSESSMENT.md` for the evidence-adjusted 78/100 rubric judgment.
+**Overall UX/design score: 9.2/10.** This is ready for hackathon demonstration and design review. This score covers interface quality only; it is not the weighted hackathon score. See `HACKATHON-ASSESSMENT.md` for the evidence-adjusted rubric judgment.
 
 ## Remaining risks
 

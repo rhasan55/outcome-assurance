@@ -10,10 +10,13 @@ The executable path demonstrates:
 - regret-aware clarification where only winner-changing ambiguity earns a question;
 - deterministic Membership value routing with a transparent counterfactual;
 - AP2, UCP, and ACP adapters normalized into one event model;
-- an independent, idempotent verifier and Living Trust Receipt;
+- a dedicated-worker, idempotent verifier and Living Trust Receipt;
 - explicit verified, pending, inferred, unobservable, and mismatch evidence states;
-- a recovery evidence package; and
-- OutcomeBench 2.0 with a frozen synthetic dataset, holdout partition, baseline, manifest, and uncertainty reporting.
+- a live untrusted-merchant-context quarantine test;
+- a downloadable recovery evidence package;
+- a repeatable 10,000-evaluation browser reference replay;
+- an editable, explicitly illustrative value model with pilot gates; and
+- OutcomeBench 2.0 with a frozen synthetic dataset, bundled reference split, baseline, manifest, and uncertainty reporting.
 
 ## Preview locally
 
@@ -31,4 +34,4 @@ Then open `http://localhost:4173`.
 
 The page uses the system font stack and needs no runtime API. The ACE overview video and poster stream from American Express; the interactive prototype itself remains local and deterministic. Primary claims link directly to official specifications and research. All Member, merchant, Offer, transaction, event, and settlement data is synthetic or illustrative. OutcomeBench results are measured only against the bundled synthetic fixtures and are not production-performance claims.
 
-See `DESIGN-REVIEW.md` for the before/after UX critique. See `HACKATHON-ASSESSMENT.md` for the candid weighted score, production gaps, pilot plan, metric interpretation, red-team objections, and the 6 supplied reference images.
+See `DESIGN-REVIEW.md` for the before/after UX critique, `RESEARCH-2026.md` for the current failure landscape, and `HACKATHON-ASSESSMENT.md` for the candid weighted score, production gaps, pilot plan, metric interpretation, red-team objections, and the 6 supplied reference images.

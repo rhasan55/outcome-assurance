@@ -8,7 +8,7 @@
   <title>Outcome Assurance</title>
   <link rel="preconnect" href="https://www.aexp-static.com">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23006fcf'/%3E%3Cpath d='M17 33l10 10 21-22' fill='none' stroke='white' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=8">
+  <link rel="stylesheet" href="./styles.css?v=9">
 </head>
 <body>
   <a class="skip-link" href="#demo">Skip to the demo</a>
@@ -58,7 +58,7 @@
       <div class="verifier-shell">
         <div class="verifier-controls">
           <fieldset><legend>Protocol adapter</legend><div class="segmented" id="adapterButtons"><button type="button" class="active" data-adapter="ap2" aria-pressed="true">AP2</button><button type="button" data-adapter="ucp" aria-pressed="false">UCP</button><button type="button" data-adapter="acp" aria-pressed="false">ACP</button></div></fieldset>
-          <div class="select-field"><label for="failureMode">Test condition</label><select id="failureMode" name="failure_mode"><option value="none">Clean settlement</option><option value="hidden_fee">Hidden $45 fee</option><option value="nonrefundable_swap">Refundability changed</option><option value="missing_amount">Settlement amount missing</option><option value="pending_benefit">Benefit still pending</option><option value="agent_overwrite">Agent tries to change contract</option></select></div>
+          <div class="select-field"><label for="failureMode">Test condition</label><select id="failureMode" name="failure_mode"><option value="none">Clean settlement</option><option value="hidden_fee">Hidden $45 fee</option><option value="nonrefundable_swap">Refundability changed</option><option value="missing_amount">Settlement amount missing</option><option value="pending_benefit">Benefit still pending</option><option value="agent_overwrite">Agent tries to change contract</option><option value="context_poisoning">Merchant prompt injection</option></select></div>
           <button class="button primary" id="runVerifier" disabled>Run verification</button>
         </div>
         <div class="verifier-results">
@@ -68,7 +68,7 @@
           </section>
           <section class="receipt" id="receiptPanel" aria-labelledby="receiptVerdict">
             <div class="receipt-heading"><div><p class="section-label">Living trust receipt</p><h3 id="receiptVerdict">Waiting for evidence</h3></div><span class="state-badge pending" id="receiptState">Pending</span></div>
-            <div class="receipt-meta"><div><span>Receipt</span><code id="receiptId">—</code></div><div><span>Idempotency</span><code id="idempotencyState">Not run</code></div></div>
+            <div class="receipt-meta"><div><span>Receipt</span><code id="receiptId">—</code></div><div><span>Idempotency</span><code id="idempotencyState">Not run</code></div><div><span>Runtime</span><code id="verifierRuntime">Dedicated worker</code></div></div>
             <div class="claim-list" id="claimList"><p class="field-note">Verified, pending, inferred, unobservable, and mismatched claims remain distinct.</p></div>
             <div class="button-row"><button class="button secondary" id="rerunVerifier" disabled>Run again</button><button class="button secondary" id="openRecovery" disabled>Open recovery package</button></div>
           </section>
@@ -132,6 +132,41 @@
             <div class="service-boundary"><article><span>Buying agent</span><h3>Proposes & acts</h3><p>Searches candidates, sends commerce messages, and receives a read-only contract copy.</p></article><div class="boundary-arrow" aria-label="One-way contract and event flow">Frozen contract → events →</div><article><span>Outcome verifier</span><h3>Evaluates & records</h3><p>Validates hashes, evaluates claims, and writes receipts to a separate store.</p></article></div>
             <div class="operations-grid"><div><strong>&lt;150 ms</strong><span>Proposed p95 verification target</span></div><div><strong>99.95%</strong><span>Proposed availability target</span></div><div><strong>&lt;0.1%</strong><span>Duplicate side-effect budget</span></div><div><strong>Policy set</strong><span>Retention requires Privacy & Legal approval</span></div></div>
             <ol class="rollout-list"><li><span>1</span><b>Replay</b><small>Frozen fixtures</small></li><li><span>2</span><b>Shadow</b><small>No customer action</small></li><li><span>3</span><b>Advisory</b><small>Receipt only</small></li><li><span>4</span><b>Guarded</b><small>Block known mismatch</small></li><li><span>5</span><b>Scaled</b><small>Domain SLO gate</small></li></ol>
+            <div class="scale-lab">
+              <div><p class="section-label">Browser reference test</p><h3>10,000 isolated verifier evaluations</h3><p>The dedicated worker replays the same approved contract and normalized event batch without blocking the interface. This is a reproducible implementation test—not an Amex-volume claim.</p></div>
+              <button class="button secondary" id="runScale">Run replay test</button>
+              <div class="scale-results" id="scaleResults" aria-live="polite"><span><b>—</b>evaluations/s</span><span><b>—</b>p95 core time</span><span><b>—</b>duplicate keys</span></div>
+            </div>
+          </div>
+        </details>
+
+        <details id="research-2026">
+          <summary><span>2026 failure landscape</span><small>Research → executable response</small></summary>
+          <div class="detail-content">
+            <p class="detail-intro">The prototype focuses on failure modes documented in current consumer research, security work, and emerging legal infrastructure.</p>
+            <div class="research-list">
+              <article><span>Decision instability</span><h3>Context can flip the purchase.</h3><p>Wharton’s ~26,000-test study found that source order, retrieval format, and injected memory changed agent selections.</p><strong>Response: approved outcome contract + deterministic router + regret test</strong><a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noreferrer">Wharton Generative AI Labs</a></article>
+              <article><span>Trust & control</span><h3>People want visibility and reversibility.</h3><p>Visa reports nearly 9 in 10 surveyed consumers want decision transparency; Checkout.com finds spending caps, revocation, and cancellation are non-negotiable.</p><strong>Response: one targeted approval + living claim states + recovery</strong><a href="https://corporate.visa.com/en/products/intelligent-commerce/earning-trust-report.html" target="_blank" rel="noreferrer">Visa consumer research</a></article>
+              <article><span>Indirect injection</span><h3>Merchant content can become an instruction.</h3><p>Unit 42 describes hidden payloads that can manipulate agent-created carts and obscure unauthorized line items.</p><strong>Response: structured fields only + quarantined untrusted context</strong><a href="https://unit42.paloaltonetworks.com/retail-fraud-agentic-ai/" target="_blank" rel="noreferrer">Palo Alto Networks Unit 42</a></article>
+              <article><span>Terms & recourse</span><h3>Proof of payment is not proof of remedy.</h3><p>The Legal Context Protocol targets discoverable terms, consent, jurisdiction, and dispute resolution for agent transactions.</p><strong>Response: evidence-first recovery bundle with no autonomous dispute</strong><a href="https://www.adr.org/press-releases/aaa-and-industry-leaders-launch-legal-protocol-for-agentic-commerce/" target="_blank" rel="noreferrer">American Arbitration Association</a></article>
+            </div>
+          </div>
+        </details>
+
+        <details id="business-case">
+          <summary><span>Business case & pilot</span><small>Replace assumptions with internal data</small></summary>
+          <div class="detail-content business-content">
+            <div class="business-intro"><div><h3>Transparent value model</h3><p>Every input is editable. Defaults are illustrative assumptions, not Amex forecasts or production results.</p></div><span class="soft-badge">Illustrative only</span></div>
+            <div class="calculator-grid">
+              <label>Eligible purchases / year<input id="annualPurchases" name="annual_purchases" type="number" min="0" step="10000" inputmode="numeric" autocomplete="off" value="1000000"></label>
+              <label>Avoidable wrong outcomes<input id="wrongOutcomeRate" name="wrong_outcome_rate" type="number" min="0" max="100" step="0.1" inputmode="decimal" autocomplete="off" value="1"><span>%</span></label>
+              <label>Cost per recovery<input id="recoveryCost" name="recovery_cost" type="number" min="0" step="1" inputmode="decimal" autocomplete="off" value="35"><span>$</span></label>
+              <label>Value lift / purchase<input id="valueLift" name="value_lift" type="number" min="0" step="0.1" inputmode="decimal" autocomplete="off" value="1.5"><span>$</span></label>
+              <label>Annual operating cost<input id="operatingCost" name="operating_cost" type="number" min="0" step="10000" inputmode="numeric" autocomplete="off" value="1000000"><span>$</span></label>
+            </div>
+            <div class="value-model-results"><div><span>Modeled gross value</span><strong id="grossValue">—</strong></div><div><span>Modeled net value</span><strong id="netValue">—</strong></div><div><span>Break-even value lift</span><strong id="breakEvenLift">—</strong></div></div>
+            <p class="formula-note">Gross value = avoided remediation cost + verified Membership value lift. Net value = gross value − operating cost. The model excludes conversion, retained spend, and brand effects until measured.</p>
+            <div class="pilot-gates"><h3>Hotel shadow pilot gates</h3><div><span>1</span><b>Coverage</b><small>≥90% material claims observable</small></div><div><span>2</span><b>Quality</b><small>≥90% mismatch detection; report false interventions</small></div><div><span>3</span><b>Member effort</b><small>≤1 question per purchase without higher abandonment</small></div><div><span>4</span><b>Operations</b><small>Measured p95, replay safety, and recovery time</small></div></div>
           </div>
         </details>
 
@@ -143,24 +178,24 @@
         <details id="bench">
           <summary><span>OutcomeBench 2.0</span><small>Frozen synthetic evaluation</small></summary>
           <div class="detail-content bench-content">
-            <div class="bench-intro"><div><h3>24 frozen synthetic cases</h3><p>16 development cases, 8 holdout cases, adversarial failures, a prompt-only baseline, and Wilson 95% intervals. Both evaluators use the same harness.</p></div><div class="bench-actions"><a href="./bench/manifest-v2.json" target="_blank" rel="noreferrer">Inspect manifest</a><button class="button primary" id="runBench">Run benchmark</button></div></div>
+            <div class="bench-intro"><div><h3>24 frozen synthetic cases</h3><p>16 development cases, 8 bundled reference-holdout cases, adversarial failures, a prompt-only baseline, and Wilson 95% intervals. Both evaluators use the same harness.</p></div><div class="bench-actions"><a href="./bench/manifest-v2.json" target="_blank" rel="noreferrer">Inspect manifest</a><button class="button primary" id="runBench">Run benchmark</button></div></div>
             <div class="bench-status"><span id="benchPulse"></span><b id="benchStatus">Ready to run</b><code id="benchHash">Dataset hash pending</code></div>
             <div class="metric-grid" id="metricGrid"><article><span>Verified outcome rate</span><strong>—</strong></article><article><span>Violation detection</span><strong>—</strong></article><article><span>Questions per purchase</span><strong>—</strong></article><article><span>Verified value delta</span><strong>—</strong></article><article><span>Evidence completeness</span><strong>—</strong></article><article><span>Avoidable regret</span><strong>—</strong></article></div>
-            <div class="comparison-table"><div><span>Evaluator</span><b>Outcome Assurance</b><b>Prompt-only baseline</b></div><div><span>All cases</span><strong id="oaScore">—</strong><strong id="baselineScore">—</strong></div><div><span>Holdout</span><strong id="oaHoldout">—</strong><strong id="baselineHoldout">—</strong></div></div>
+            <div class="comparison-table"><div><span>Evaluator</span><b>Outcome Assurance</b><b>Prompt-only baseline</b></div><div><span>All cases</span><strong id="oaScore">—</strong><strong id="baselineScore">—</strong></div><div><span>Reference split</span><strong id="oaHoldout">—</strong><strong id="baselineHoldout">—</strong></div></div>
             <p class="field-note">Synthetic reference results only. A production holdout must remain outside the deployable bundle.</p>
           </div>
         </details>
       </div>
     </section>
 
-    <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">Research & standards</h2><div class="source-links"><a href="https://www.americanexpress.com/en-us/newsroom/articles/innovation/american-express-debuts-agentic-commerce-experiences--ace--devel.html" target="_blank" rel="noreferrer">American Express ACE</a><a href="https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md" target="_blank" rel="noreferrer">Google AP2</a><a href="https://www.shopify.com/ucp" target="_blank" rel="noreferrer">Universal Commerce Protocol</a><a href="https://developers.openai.com/commerce" target="_blank" rel="noreferrer">Agentic Commerce Protocol</a><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.800-2.ipd.pdf" target="_blank" rel="noreferrer">NIST benchmark practices</a><a href="https://aclanthology.org/2026.findings-acl.2028/" target="_blank" rel="noreferrer">Decision-aware clarification</a></div></section>
+    <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">Research & standards</h2><div class="source-links"><a href="https://www.americanexpress.com/en-us/newsroom/articles/innovation/american-express-debuts-agentic-commerce-experiences--ace--devel.html" target="_blank" rel="noreferrer">American Express ACE</a><a href="https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md" target="_blank" rel="noreferrer">Google AP2</a><a href="https://www.shopify.com/ucp" target="_blank" rel="noreferrer">Universal Commerce Protocol</a><a href="https://developers.openai.com/commerce" target="_blank" rel="noreferrer">Agentic Commerce Protocol</a><a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noreferrer">Agentic shopping stability</a><a href="https://corporate.visa.com/en/products/intelligent-commerce/earning-trust-report.html" target="_blank" rel="noreferrer">Visa consumer trust</a><a href="https://unit42.paloaltonetworks.com/retail-fraud-agentic-ai/" target="_blank" rel="noreferrer">Agentic commerce threats</a><a href="https://www.adr.org/press-releases/aaa-and-industry-leaders-launch-legal-protocol-for-agentic-commerce/" target="_blank" rel="noreferrer">Legal Context Protocol</a><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.800-2.ipd.pdf" target="_blank" rel="noreferrer">NIST benchmark practices</a><a href="https://aclanthology.org/2026.findings-acl.2028/" target="_blank" rel="noreferrer">Decision-aware clarification</a></div></section>
   </main>
 
   <footer><span>Outcome Assurance</span><p>Internal prototype · Synthetic data · No purchase is made</p></footer>
 
   <dialog class="modal" id="jsonModal" aria-labelledby="jsonTitle"><div class="modal-heading"><div><p class="section-label">Portable object</p><h2 id="jsonTitle">Outcome contract JSON</h2></div><button class="icon-button" id="closeJson" aria-label="Close JSON dialog">×</button></div><pre><code id="jsonCode"></code></pre><div class="button-row"><button class="button secondary" id="copyJson">Copy JSON</button><button class="button primary" id="downloadJson">Download</button></div></dialog>
-  <dialog class="modal recovery-modal" id="recoveryDrawer" aria-labelledby="recoveryTitle"><div class="modal-heading"><div><p class="section-label">Recovery package</p><h2 id="recoveryTitle">Ready for servicing</h2></div><button class="icon-button" id="closeRecovery" aria-label="Close recovery package">×</button></div><div class="recovery-items" id="recoveryItems"></div><p class="recovery-summary" id="recoverySummary"></p></dialog>
+  <dialog class="modal recovery-modal" id="recoveryDrawer" aria-labelledby="recoveryTitle"><div class="modal-heading"><div><p class="section-label">Recovery package</p><h2 id="recoveryTitle">Ready for servicing</h2></div><button class="icon-button" id="closeRecovery" aria-label="Close recovery package">×</button></div><div class="recovery-items" id="recoveryItems"></div><p class="recovery-summary" id="recoverySummary"></p><div class="button-row"><button class="button primary" id="downloadRecovery">Download proof bundle</button></div></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=5" defer></script>
+  <script src="./app.js?v=6" defer></script>
 </body>
 </html>
