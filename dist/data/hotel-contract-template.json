@@ -1,7 +1,7 @@
 {
-  "schema_id": "oa://contracts/hotel-booking/1.2.0",
-  "contract_id": "oa_demo_hy_2048",
-  "version": "1.2.0",
+  "schema_id": "oa://contracts/hotel-booking/1.3.0",
+  "contract_id": "oa_demo_hotel_2048",
+  "version": "1.3.0",
   "status": "draft",
   "assurance_level": "decision_sensitive",
   "approved_fields": {
@@ -24,6 +24,7 @@
   "clarification_policy": {
     "method": "expected_decision_regret",
     "question_cost_usd": 5,
+    "expected_regret_usd": 13.02,
     "ask_when": "expected_regret_gt_question_cost"
   },
   "evidence_policy": {

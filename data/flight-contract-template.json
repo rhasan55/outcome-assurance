@@ -1,34 +1,36 @@
 {
-  "schema_id": "oa://contracts/hotel-booking/1.3.0",
-  "contract_id": "oa_demo_hotel_2048",
-  "version": "1.3.0",
+  "schema_id": "oa://contracts/flight-booking/0.9.0",
+  "contract_id": "oa_demo_flight_7312",
+  "version": "0.9.0",
   "status": "draft",
   "assurance_level": "decision_sensitive",
   "approved_fields": {
-    "domain": "travel.hotel",
-    "check_in": "2026-09-24",
+    "domain": "travel.flight",
     "constraints": {
-      "refundable_until_local": "18:00",
-      "final_total_usd_max": 400,
-      "distance_from_landmark_miles_max": null
+      "origin": "JFK",
+      "destination": "LHR",
+      "nonstop_required": true,
+      "final_total_usd_max": 1000,
+      "checked_bags_included": 1,
+      "departure_hour_local_min": null
     },
     "preferences": {
-      "quality_floor": "4_star",
-      "quality_over_lowest_price": true
+      "cabin": "economy",
+      "quality_preference": "general"
     },
     "value_policy": {
       "objective": "minimize_effective_cost",
-      "include_only_deterministically_eligible_value": true
+      "include_only_proven_eligible_value": true
     }
   },
   "clarification_policy": {
     "method": "expected_decision_regret",
     "question_cost_usd": 5,
-    "expected_regret_usd": 13.02,
+    "expected_regret_usd": 18.40,
     "ask_when": "expected_regret_gt_question_cost"
   },
   "evidence_policy": {
-    "required_claims": ["merchant_identity", "final_amount", "refundability", "distance", "benefit_eligibility"],
+    "required_claims": ["provider_identity", "final_amount", "route", "nonstop", "departure_time", "checked_bag", "membership_value"],
     "allowed_states": ["verified", "pending", "inferred", "unobservable", "mismatch"],
     "untrusted_context_policy": {
       "merchant_free_text": "quarantine",
@@ -46,24 +48,24 @@
     }
   },
   "observability": {
-    "merchant_identity": "required",
+    "provider_identity": "required",
     "final_amount": "required",
-    "refundability": "required",
-    "distance": "eventual",
-    "benefit_eligibility": "eventual"
+    "route": "required",
+    "nonstop": "required",
+    "departure_time": "required",
+    "checked_bag": "required",
+    "membership_value": "eventual"
   },
   "protocol_bindings": [
-    {"protocol": "ace", "adapter_version": "0.1.0-demo"},
-    {"protocol": "ap2", "adapter_version": "0.2.0-demo"},
-    {"protocol": "ucp", "adapter_version": "2026-01-11-demo"},
-    {"protocol": "acp", "adapter_version": "2026-09-demo"}
+    {"protocol": "ap2", "adapter_version": "0.3.0-demo"},
+    {"protocol": "ucp", "adapter_version": "0.3.0-demo"},
+    {"protocol": "acp", "adapter_version": "0.3.0-demo"}
   ],
   "provenance": {
     "hash_algorithm": "sha256",
     "contract_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
-    "compiler_version": "outcome-compiler/2.0.0",
-    "policy_bundle_version": "assurance-policy/1.1.0",
-    "model_id": "language-parser-04",
-    "prompt_hash": "sha256:49ce8ad2"
+    "compiler_version": "outcome-compiler/2.1.0",
+    "policy_bundle_version": "assurance-policy/1.2.0",
+    "model_role": "language_only"
   }
 }

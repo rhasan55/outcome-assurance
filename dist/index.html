@@ -3,74 +3,119 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A working Outcome Assurance prototype that turns a plain-language request into an approved contract and an independently verified receipt.">
-  <meta name="theme-color" content="#f5f5f7">
-  <title>Outcome Assurance</title>
+  <meta name="description" content="Outcome Assurance confirms what a customer means before an agent buys, then checks whether the promised result actually happened.">
+  <meta name="theme-color" content="#f4f2ed">
+  <title>Outcome Assurance | From Request to Proof</title>
   <link rel="preconnect" href="https://www.aexp-static.com">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23006fcf'/%3E%3Cpath d='M17 33l10 10 21-22' fill='none' stroke='white' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=9">
+  <link rel="stylesheet" href="./styles.css?v=10">
 </head>
 <body>
   <a class="skip-link" href="#demo">Skip to the demo</a>
   <header class="topbar">
-    <a class="wordmark" href="#demo" aria-label="Outcome Assurance home"><span class="wordmark-icon" aria-hidden="true">OA</span><span>Outcome Assurance</span></a>
-    <nav aria-label="Primary navigation"><a href="#demo">Try the flow</a><a href="#verifier">Verify</a><a href="#ace-fit">ACE fit</a><a href="#details">Technical details</a></nav>
-    <span class="prototype-label">Interactive prototype</span>
+    <a class="wordmark" href="#top" aria-label="Outcome Assurance home"><span class="wordmark-icon" aria-hidden="true">OA</span><span>Outcome Assurance</span></a>
+    <nav aria-label="Primary navigation"><a href="#demo">Try It</a><a href="#opportunity">Business Case</a><a href="#verifier">See the Proof</a><a href="#details">How It Works</a></nav>
+    <span class="prototype-label">Working prototype</span>
   </header>
 
-  <main>
+  <main id="top">
     <section class="intro" aria-labelledby="page-title">
-      <p class="overline">Contract → decision → proof</p>
-      <h1 id="page-title">Did the purchase deliver what you asked for?</h1>
-      <p>Outcome Assurance records the answer before checkout, then verifies it after the transaction. No API key. No live purchase.</p>
+      <div class="intro-copy">
+        <p class="overline">From permission to proof</p>
+        <h1 id="page-title">Your agent can pay. Did it get the right result?</h1>
+        <p>Before an agent buys, Outcome Assurance confirms what “right” means. After the purchase, it checks what actually happened.</p>
+      </div>
+      <div class="promise-strip" role="list" aria-label="How Outcome Assurance works">
+        <div role="listitem"><span>1</span><b>Understand</b><small>Turn everyday words into clear requirements.</small></div>
+        <div role="listitem"><span>2</span><b>Choose</b><small>Find the best option that meets them.</small></div>
+        <div role="listitem"><span>3</span><b>Check</b><small>Compare the real result with the approval.</small></div>
+        <div role="listitem"><span>4</span><b>Help</b><small>Package the facts if something changed.</small></div>
+      </div>
     </section>
 
     <section class="demo" id="demo" aria-labelledby="demo-title">
       <div class="demo-heading">
-        <div><p class="section-label">Hotel example</p><h2 id="demo-title">Try one complete journey</h2></div>
-        <ol class="progress" aria-label="Journey progress"><li class="current" id="stepRequest"><span>1</span>Request</li><li id="stepDecision"><span>2</span>Decide</li><li id="stepProof"><span>3</span>Verify</li></ol>
+        <div><p class="section-label">Interactive example</p><h2 id="demo-title">Try a hotel or flight request</h2></div>
+        <ol class="progress" aria-label="Journey progress"><li class="current" id="stepRequest"><span>1</span>Ask</li><li id="stepDecision"><span>2</span>Agree</li><li id="stepProof"><span>3</span>Check</li></ol>
+      </div>
+
+      <div class="scenario-bar">
+        <span>Choose a journey</span>
+        <div class="segmented scenario-switch" id="scenarioButtons" aria-label="Example journey">
+          <button type="button" class="active" data-scenario="hotel" aria-pressed="true">Hotel</button>
+          <button type="button" data-scenario="flight" aria-pressed="false">Flight</button>
+        </div>
+        <p id="scenarioNote">One vague phrase changes the hotel choice.</p>
       </div>
 
       <div class="workspace-grid">
         <article class="request-card">
-          <div class="card-heading"><div><p class="section-label">Your request</p><h3>Start in plain language</h3></div><span class="soft-badge">Demo data</span></div>
-          <label class="sr-only" for="requestInput">Hotel booking request</label>
-          <textarea id="requestInput" name="hotel_request" autocomplete="off" spellcheck="true">Book me a really nice refundable hotel near Hudson Yards tomorrow. Keep the final cost under $400 and use whatever Amex value makes sense.</textarea>
-          <button class="button primary" id="compileButton">Review the outcome</button>
-          <p class="field-note request-note">The language model only proposes fields. Policy code handles money, eligibility, approval, and proof.</p>
+          <div class="card-heading"><div><p class="section-label">Your request</p><h3 id="requestHeading">Say what you want normally</h3></div><span class="soft-badge">Made-up data</span></div>
+          <label class="sr-only" for="requestInput" id="requestLabel">Hotel booking request</label>
+          <textarea id="requestInput" name="purchase_request" autocomplete="off" spellcheck="true">Book me a really nice refundable hotel near Hudson Yards tomorrow. Keep the final cost under $400, including taxes and required fees, and use any eligible Amex value.</textarea>
+          <button class="button primary" id="compileButton">Check What I Mean</button>
+          <p class="field-note request-note">No purchase is made. The demo uses fixed options so every result can be repeated.</p>
         </article>
 
         <article class="contract-card" id="contract" aria-labelledby="contract-title">
-          <div class="card-heading"><div><p class="section-label">Outcome contract</p><h3 id="contract-title">hotel_booking <span>v1.2.0</span></h3></div><span class="state-badge draft" id="contractStatus">Not started</span></div>
-          <div class="contract-rows" id="contractRows" aria-live="polite"><div class="empty-state"><span aria-hidden="true">{ }</span><p>Your approved requirements will appear here.</p></div></div>
-          <div class="hash-row"><span>Contract hash</span><code id="shortHash">Created after review</code></div>
-          <div class="button-row"><button class="button secondary" id="viewJson" disabled>View JSON</button><button class="button primary" id="approveContract" disabled>Approve contract</button></div>
+          <div class="card-heading">
+            <div>
+              <p class="section-label plain-label">What You Approved <span class="term-help"><button type="button" class="info-button" aria-label="Explain what you approved" aria-expanded="false" aria-describedby="help-contract">i</button><span class="info-popover" id="help-contract" role="tooltip">Technical name: outcome contract. It is a saved, versioned record of the result you agreed to.</span></span></p>
+              <h3 id="contract-title">Hotel stay <span>v1.3</span></h3>
+            </div>
+            <span class="state-badge draft" id="contractStatus">Not started</span>
+          </div>
+          <div class="contract-rows" id="contractRows" aria-live="polite"><div class="empty-state"><span aria-hidden="true">✓</span><p>Your clear requirements and anything that still needs an answer will appear here.</p></div></div>
+          <div class="hash-row"><span>Tamper check <span class="term-help"><button type="button" class="info-button" aria-label="Explain tamper check" aria-expanded="false" aria-describedby="help-hash">i</button><span class="info-popover align-right" id="help-hash" role="tooltip">Technical name: SHA-256 hash. If any approved field changes, this fingerprint changes too.</span></span></span><code id="shortHash">Created after review</code></div>
+          <div class="button-row"><button class="button secondary" id="viewJson" disabled>See Machine Version</button><button class="button primary" id="approveContract" disabled>Approve These Details</button></div>
         </article>
       </div>
       <div class="decision-area" id="stagePanel" aria-live="polite"></div>
     </section>
 
+    <section class="opportunity-section" id="opportunity" aria-labelledby="opportunity-title">
+      <div class="section-heading">
+        <div><p class="section-label">Hackathon submission</p><h2 id="opportunity-title">The business case in plain language</h2></div>
+        <p>The prototype is working today. The next step is a controlled hotel pilot using approved Amex data and owners.</p>
+      </div>
+      <div class="submission-grid">
+        <article><span>Product</span><h3>What It Does</h3><p>Confirms what the Member means, chooses the best valid option, and checks the real result after purchase.</p></article>
+        <article><span>Opportunity</span><h3>What Is Missing Today</h3><p>Payment systems can prove permission. They do not always prove that the final choice matched the Member’s practical goal.</p></article>
+        <article><span>Enterprise value</span><h3>Why Amex Benefits</h3><p>More visible Membership value, fewer avoidable wrong outcomes, and a ready-made evidence package for servicing.</p></article>
+        <article><span>Estimated effort</span><h3>Medium for a Shadow Pilot</h3><p>Planning estimate: 8 to 12 weeks after data access and owner approval. Production expansion is a separate, higher-effort phase.</p></article>
+      </div>
+      <div class="value-audience" role="list" aria-label="Enterprise value by audience">
+        <div role="listitem"><b>Members</b><span>Fewer questions and clearer control</span></div>
+        <div role="listitem"><b>Membership</b><span>Value used only when eligibility is proven</span></div>
+        <div role="listitem"><b>Servicing</b><span>Less time rebuilding what happened</span></div>
+        <div role="listitem"><b>Merchants & ETS</b><span>One outcome format across channels</span></div>
+      </div>
+      <div class="submission-actions"><a class="button secondary" href="./SUBMISSION-BRIEF.md" target="_blank" rel="noreferrer">Read Submission Brief</a><a class="button primary" href="./PRESENTATION-SCRIPT-4-MIN.md" target="_blank" rel="noreferrer">Open 4-Minute Script</a></div>
+    </section>
+
     <section class="verifier-section" id="verifier" aria-labelledby="verifier-title">
       <div class="section-heading">
-        <div><p class="section-label">Independent verification</p><h2 id="verifier-title">The buying agent does not grade itself.</h2></div>
-        <p>A separate verifier reads the frozen contract and normalized commerce events. It can issue a result, but it cannot change what you approved.</p>
+        <div><p class="section-label">After the purchase</p><h2 id="verifier-title">Check what actually happened</h2></div>
+        <p>A separate checker compares the approved details with order and payment updates. The buying agent cannot change the result.</p>
       </div>
       <div class="verifier-shell">
+        <div class="verifier-explainer"><b>Why separate?</b><span>The system that made the choice should not grade its own work.</span></div>
         <div class="verifier-controls">
-          <fieldset><legend>Protocol adapter</legend><div class="segmented" id="adapterButtons"><button type="button" class="active" data-adapter="ap2" aria-pressed="true">AP2</button><button type="button" data-adapter="ucp" aria-pressed="false">UCP</button><button type="button" data-adapter="acp" aria-pressed="false">ACP</button></div></fieldset>
-          <div class="select-field"><label for="failureMode">Test condition</label><select id="failureMode" name="failure_mode"><option value="none">Clean settlement</option><option value="hidden_fee">Hidden $45 fee</option><option value="nonrefundable_swap">Refundability changed</option><option value="missing_amount">Settlement amount missing</option><option value="pending_benefit">Benefit still pending</option><option value="agent_overwrite">Agent tries to change contract</option><option value="context_poisoning">Merchant prompt injection</option></select></div>
-          <button class="button primary" id="runVerifier" disabled>Run verification</button>
+          <fieldset><legend>Event translator <span class="term-help"><button type="button" class="info-button" aria-label="Explain event translator" aria-expanded="false" aria-describedby="help-adapter">i</button><span class="info-popover" id="help-adapter" role="tooltip">Technical name: protocol adapter. It turns updates from AP2, UCP, or ACP into the same simple event format.</span></span></legend><div class="segmented" id="adapterButtons"><button type="button" class="active" data-adapter="ap2" aria-pressed="true">AP2</button><button type="button" data-adapter="ucp" aria-pressed="false">UCP</button><button type="button" data-adapter="acp" aria-pressed="false">ACP</button></div></fieldset>
+          <div class="select-field"><label for="failureMode">What should we test?</label><select id="failureMode" name="failure_mode"><option value="none">Everything matches</option><option value="hidden_fee">A hidden $45 fee appears</option><option value="term_change">An approved term changes</option><option value="missing_amount">The final amount is missing</option><option value="pending_benefit">Amex value is still pending</option><option value="agent_overwrite">The agent tries to change approval</option><option value="context_poisoning">Merchant text tries to change the choice</option></select></div>
+          <button class="button primary" id="runVerifier" disabled>Check the Result</button>
         </div>
         <div class="verifier-results">
           <section class="event-panel" aria-labelledby="events-title">
-            <div class="panel-title"><h3 id="events-title">Normalized events</h3><span>Read only</span></div>
-            <div class="event-stream" id="eventStream"><div class="empty-state compact"><p>Approve the contract to enable verification.</p></div></div>
+            <div class="panel-title"><h3 id="events-title">What Happened <span class="term-help"><button type="button" class="info-button" aria-label="Explain event list" aria-expanded="false" aria-describedby="help-events">i</button><span class="info-popover" id="help-events" role="tooltip">These are order, payment, and benefit updates translated into one consistent list.</span></span></h3><span>Read only</span></div>
+            <div class="event-stream" id="eventStream"><div class="empty-state compact"><p>Approve the details above to turn on checking.</p></div></div>
           </section>
           <section class="receipt" id="receiptPanel" aria-labelledby="receiptVerdict">
-            <div class="receipt-heading"><div><p class="section-label">Living trust receipt</p><h3 id="receiptVerdict">Waiting for evidence</h3></div><span class="state-badge pending" id="receiptState">Pending</span></div>
-            <div class="receipt-meta"><div><span>Receipt</span><code id="receiptId">—</code></div><div><span>Idempotency</span><code id="idempotencyState">Not run</code></div><div><span>Runtime</span><code id="verifierRuntime">Dedicated worker</code></div></div>
-            <div class="claim-list" id="claimList"><p class="field-note">Verified, pending, inferred, unobservable, and mismatched claims remain distinct.</p></div>
-            <div class="button-row"><button class="button secondary" id="rerunVerifier" disabled>Run again</button><button class="button secondary" id="openRecovery" disabled>Open recovery package</button></div>
+            <div class="receipt-heading"><div><p class="section-label">Result and proof <span class="term-help"><button type="button" class="info-button" aria-label="Explain result and proof" aria-expanded="false" aria-describedby="help-receipt">i</button><span class="info-popover" id="help-receipt" role="tooltip">Technical name: Living Trust Receipt. Each fact can be matched, waiting, inferred, missing, or changed.</span></span></p><h3 id="receiptVerdict">Waiting for updates</h3></div><span class="state-badge pending" id="receiptState">Waiting</span></div>
+            <details class="technical-proof"><summary>Technical proof</summary><div class="receipt-meta"><div><span>Receipt ID</span><code id="receiptId">Not issued</code></div><div><span>Repeat safety</span><code id="idempotencyState">Not run</code></div><div><span>Independent runtime</span><code id="verifierRuntime">Dedicated worker</code></div></div></details>
+            <div class="claim-list" id="claimList"><p class="field-note">Each important promise will be checked separately.</p></div>
+            <div class="state-key" aria-label="Possible proof states"><span class="verified">Matches</span><span class="pending">Waiting</span><span class="inferred">Likely</span><span class="unobservable">No proof</span><span class="mismatch">Changed</span></div>
+            <div class="button-row"><button class="button secondary" id="rerunVerifier" disabled>Check Again</button><button class="button secondary" id="openRecovery" disabled>Prepare Support Package</button></div>
           </section>
         </div>
       </div>
@@ -78,8 +123,8 @@
 
     <section class="ace-section" id="ace-fit" aria-labelledby="ace-title">
       <div class="section-heading">
-        <div><p class="section-label">ACE + Outcome Assurance</p><h2 id="ace-title">Start where Amex is today.</h2></div>
-        <p>ACE establishes trusted agentic payments. Outcome Assurance begins after identity and authorization: it makes success testable, measurable, and recoverable.</p>
+        <div><p class="section-label">Fits beside ACE</p><h2 id="ace-title">It does not replace payment infrastructure</h2></div>
+        <p>ACE and commerce protocols help establish identity, permission, credentials, and transaction facts. Outcome Assurance uses those facts to check the result.</p>
       </div>
       <div class="ace-grid">
         <figure class="ace-media">
@@ -88,114 +133,89 @@
             <track kind="captions" srclang="en" label="English" src="https://www.americanexpress.com/content/dam/amex/en-us/company/agentic-commerce/AmexAgenticCommerce.vtt">
             Your browser does not support the video. <a href="https://www.americanexpress.com/en-us/company/agentic-commerce/" target="_blank" rel="noreferrer">View the official ACE overview</a>.
           </video>
-          <figcaption>Official American Express conceptual demo. Features are under development, subject to change, and may vary by market. <a href="https://www.americanexpress.com/en-us/company/agentic-commerce/" target="_blank" rel="noreferrer">Open the source</a></figcaption>
+          <figcaption>Official American Express conceptual demo. Features are under development and may vary by market. <a href="https://www.americanexpress.com/en-us/company/agentic-commerce/" target="_blank" rel="noreferrer">Open the source</a></figcaption>
         </figure>
-        <div class="ace-status">
-          <div class="status-kicker"><span>Official status</span><time datetime="2026-09-23">September 2026</time></div>
-          <p>American Express lists 3 ACE specifications as available as of April 14, 2026, with 2 still under development.</p>
-          <div class="capability-list" role="list" aria-label="ACE developer kit capability status">
-            <div role="listitem"><span class="availability available">Available</span><b>Account Enablement</b><small>Register Cards with verified agents</small></div>
-            <div role="listitem"><span class="availability available">Available</span><b>Intent Intelligence</b><small>Capture intent for controls and disputes</small></div>
-            <div role="listitem"><span class="availability available">Available</span><b>Payment Credentials</b><small>Issue scoped, tokenized credentials</small></div>
-            <div role="listitem"><span class="availability developing">In development</span><b>Agent Registration</b><small>Verify agents on the Amex network</small></div>
-            <div role="listitem"><span class="availability developing">In development</span><b>Cart Context</b><small>Add cart details for validation and disputes</small></div>
-          </div>
-          <div class="boundary-statement"><span>Outcome Assurance owns</span><p>The portable outcome contract, decision-regret policy, deterministic Membership routing, independent outcome verification, claim-level receipt, and evidence-first recovery package.</p></div>
+        <div class="plain-boundary">
+          <div><span>Existing systems answer</span><h3>Can this agent make this payment?</h3><p>Identity, permission, credentials, checkout, order, and payment facts.</p></div>
+          <div class="boundary-plus" aria-hidden="true">+</div>
+          <div><span>Outcome Assurance answers</span><h3>Did the Member get the approved result?</h3><p>Clear requirements, best valid choice, Membership value, proof, and support handoff.</p></div>
         </div>
       </div>
       <div class="measurement-bridge">
-        <div class="measurement-heading"><div><p class="section-label">New measurement layer</p><h3>From transaction control to verified outcome.</h3></div><p>No production lift is claimed. These are synthetic prototype results and proposed pilot measures.</p></div>
-        <div class="measurement-table" role="table" aria-label="How Outcome Assurance extends ACE signals into outcome measures">
-          <div class="measurement-row header" role="row"><span>Existing signal</span><span>New outcome measure</span><span>Prototype evidence</span></div>
-          <div class="measurement-row" role="row"><b>Intent + approval</b><span>Questions per purchase</span><strong>1 targeted question</strong></div>
-          <div class="measurement-row" role="row"><b>Cart + order events</b><span>Verified Outcome Rate</span><strong>95.8% on 24 synthetic cases</strong></div>
-          <div class="measurement-row" role="row"><b>Membership context</b><span>Verified Value Delta</span><strong>$21 in this hotel decision</strong></div>
-          <div class="measurement-row" role="row"><b>Purchase protection</b><span>Violation detection</span><strong>90.0% synthetic detection</strong></div>
+        <div class="measurement-heading"><div><p class="section-label">Measured in this prototype</p><h3>Claims become numbers judges can inspect</h3></div><p>Synthetic results show that the code runs. They do not claim production impact.</p></div>
+        <div class="measurement-table" role="table" aria-label="Prototype measures">
+          <div class="measurement-row header" role="row"><span>Question</span><span>Measure</span><span>Prototype evidence</span></div>
+          <div class="measurement-row" role="row"><b>Did we ask only when needed?</b><span>Questions per purchase</span><strong>0.33 across 24 cases</strong></div>
+          <div class="measurement-row" role="row"><b>Did we classify the result correctly?</b><span>Verified outcome rate</span><strong>95.8% across 24 cases</strong></div>
+          <div class="measurement-row" role="row"><b>Did Amex value change the choice?</b><span>Verified value difference</span><strong id="journeyValueDelta">$21 in the hotel example</strong></div>
+          <div class="measurement-row" role="row"><b>Did we catch bad outcomes?</b><span>Violation detection</span><strong>90.0% in synthetic cases</strong></div>
         </div>
       </div>
     </section>
 
     <section class="details-section" id="details" aria-labelledby="details-title">
-      <div class="section-heading compact-heading"><div><p class="section-label">Technical details</p><h2 id="details-title">Everything else, when you need it.</h2></div><p>The primary journey stays simple. Schemas, policy, rollout controls, benchmarks, and protocol boundaries remain inspectable.</p></div>
+      <div class="section-heading compact-heading"><div><p class="section-label">Optional detail</p><h2 id="details-title">How it works under the hood</h2></div><p>The main journey stays simple. Technical detail is available when a judge or engineer wants to inspect it.</p></div>
       <div class="disclosure-list">
         <details>
-          <summary><span>Portable contract & assurance policy</span><small>Schema, versions, tiers</small></summary>
+          <summary><span>What the system records</span><small>Human view, machine version, and risk level</small></summary>
           <div class="detail-content two-column">
-            <div><h3>One meaning in two forms</h3><p>The human-readable rows and machine-readable JSON share one version, hash, approval record, and evidence policy.</p><div class="link-row"><a href="./schemas/outcome-contract.schema.json" target="_blank" rel="noreferrer">Open JSON Schema</a><a href="./data/hotel-contract-template.json" target="_blank" rel="noreferrer">Open template</a></div><div class="registry-list" aria-label="Contract registry"><div><b>hotel_booking</b><span>1.2.0 · stable</span></div><div><b>retail_purchase</b><span>0.8.0 · preview</span></div><div><b>dining_reservation</b><span>0.5.0 · draft</span></div></div></div>
-            <div><h3>Clarification scales with consequence</h3><ul class="tier-grid"><li><b>Observer</b><span>Read only</span></li><li><b>Low consequence</b><span>Proceed automatically</span></li><li class="selected"><b>Decision sensitive</b><span>Ask if the winner can change</span></li><li><b>High consequence</b><span>Require explicit approval</span></li><li><b>Weak evidence</b><span>Constrain the action</span></li><li><b>Recovery</b><span>Package the proof</span></li></ul></div>
+            <div><h3>One approval in two forms</h3><p>The readable rows and machine JSON share one version, fingerprint, approval record, and list of required proof.</p><div class="link-row"><a href="./schemas/outcome-contract.schema.json" target="_blank" rel="noreferrer">Open JSON Schema</a><a href="./data/hotel-contract-template.json" target="_blank" rel="noreferrer">Hotel Template</a><a href="./data/flight-contract-template.json" target="_blank" rel="noreferrer">Flight Template</a></div><div class="registry-list" aria-label="Available contract types"><div><b>Hotel booking</b><span>1.3, working demo</span></div><div><b>Flight booking</b><span>0.9, working demo</span></div><div><b>Retail purchase</b><span>0.8, next</span></div></div></div>
+            <div><h3>More consequence means more control</h3><ul class="tier-grid"><li><b>Observe</b><span>Read only</span></li><li><b>Low consequence</b><span>Proceed automatically</span></li><li class="selected"><b>Choice can change</b><span>Ask one useful question</span></li><li><b>High consequence</b><span>Require clear approval</span></li><li><b>Weak proof</b><span>Limit what can be claimed</span></li><li><b>Recovery</b><span>Package the facts</span></li></ul></div>
           </div>
         </details>
 
         <details>
-          <summary><span>Service separation & rollout</span><small>Access, SLOs, shadow mode</small></summary>
+          <summary><span>How it can scale safely</span><small>Separate duties, replay safety, and staged rollout</small></summary>
           <div class="detail-content">
-            <div class="service-boundary"><article><span>Buying agent</span><h3>Proposes & acts</h3><p>Searches candidates, sends commerce messages, and receives a read-only contract copy.</p></article><div class="boundary-arrow" aria-label="One-way contract and event flow">Frozen contract → events →</div><article><span>Outcome verifier</span><h3>Evaluates & records</h3><p>Validates hashes, evaluates claims, and writes receipts to a separate store.</p></article></div>
-            <div class="operations-grid"><div><strong>&lt;150 ms</strong><span>Proposed p95 verification target</span></div><div><strong>99.95%</strong><span>Proposed availability target</span></div><div><strong>&lt;0.1%</strong><span>Duplicate side-effect budget</span></div><div><strong>Policy set</strong><span>Retention requires Privacy & Legal approval</span></div></div>
-            <ol class="rollout-list"><li><span>1</span><b>Replay</b><small>Frozen fixtures</small></li><li><span>2</span><b>Shadow</b><small>No customer action</small></li><li><span>3</span><b>Advisory</b><small>Receipt only</small></li><li><span>4</span><b>Guarded</b><small>Block known mismatch</small></li><li><span>5</span><b>Scaled</b><small>Domain SLO gate</small></li></ol>
-            <div class="scale-lab">
-              <div><p class="section-label">Browser reference test</p><h3>10,000 isolated verifier evaluations</h3><p>The dedicated worker replays the same approved contract and normalized event batch without blocking the interface. This is a reproducible implementation test—not an Amex-volume claim.</p></div>
-              <button class="button secondary" id="runScale">Run replay test</button>
-              <div class="scale-results" id="scaleResults" aria-live="polite"><span><b>—</b>evaluations/s</span><span><b>—</b>p95 core time</span><span><b>—</b>duplicate keys</span></div>
-            </div>
-          </div>
-        </details>
-
-        <details id="research-2026">
-          <summary><span>2026 failure landscape</span><small>Research → executable response</small></summary>
-          <div class="detail-content">
-            <p class="detail-intro">The prototype focuses on failure modes documented in current consumer research, security work, and emerging legal infrastructure.</p>
-            <div class="research-list">
-              <article><span>Decision instability</span><h3>Context can flip the purchase.</h3><p>Wharton’s ~26,000-test study found that source order, retrieval format, and injected memory changed agent selections.</p><strong>Response: approved outcome contract + deterministic router + regret test</strong><a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noreferrer">Wharton Generative AI Labs</a></article>
-              <article><span>Trust & control</span><h3>People want visibility and reversibility.</h3><p>Visa reports nearly 9 in 10 surveyed consumers want decision transparency; Checkout.com finds spending caps, revocation, and cancellation are non-negotiable.</p><strong>Response: one targeted approval + living claim states + recovery</strong><a href="https://corporate.visa.com/en/products/intelligent-commerce/earning-trust-report.html" target="_blank" rel="noreferrer">Visa consumer research</a></article>
-              <article><span>Indirect injection</span><h3>Merchant content can become an instruction.</h3><p>Unit 42 describes hidden payloads that can manipulate agent-created carts and obscure unauthorized line items.</p><strong>Response: structured fields only + quarantined untrusted context</strong><a href="https://unit42.paloaltonetworks.com/retail-fraud-agentic-ai/" target="_blank" rel="noreferrer">Palo Alto Networks Unit 42</a></article>
-              <article><span>Terms & recourse</span><h3>Proof of payment is not proof of remedy.</h3><p>The Legal Context Protocol targets discoverable terms, consent, jurisdiction, and dispute resolution for agent transactions.</p><strong>Response: evidence-first recovery bundle with no autonomous dispute</strong><a href="https://www.adr.org/press-releases/aaa-and-industry-leaders-launch-legal-protocol-for-agentic-commerce/" target="_blank" rel="noreferrer">American Arbitration Association</a></article>
-            </div>
+            <div class="service-boundary"><article><span>Buying agent</span><h3>Suggests and acts</h3><p>Searches choices and receives a read-only copy of the approval.</p></article><div class="boundary-arrow" aria-label="Approved details and event flow">Approved details → updates →</div><article><span>Independent checker</span><h3>Checks and records</h3><p>Compares events, creates the result, and cannot rewrite the approval.</p></article></div>
+            <div class="operations-grid"><div><strong>&lt;150 ms</strong><span>Proposed p95 check target</span></div><div><strong>99.95%</strong><span>Proposed availability target</span></div><div><strong>&lt;0.1%</strong><span>Proposed duplicate-action budget</span></div><div><strong>Not set</strong><span>Retention needs Privacy and Legal approval</span></div></div>
+            <ol class="rollout-list"><li><span>1</span><b>Replay</b><small>Fixed test cases</small></li><li><span>2</span><b>Shadow</b><small>No customer action</small></li><li><span>3</span><b>Advisory</b><small>Staff sees result</small></li><li><span>4</span><b>Guarded</b><small>Only known mismatches</small></li><li><span>5</span><b>Scale</b><small>Only after targets pass</small></li></ol>
+            <div class="scale-lab"><div><p class="section-label">Browser reference test</p><h3>Run 10,000 repeat checks</h3><p>This tests repeatability and core speed in one browser. It does not represent Amex production capacity.</p></div><button class="button secondary" id="runScale">Run Repeat Test</button><div class="scale-results" id="scaleResults" aria-live="polite"><span><b>Not run</b>checks per second</span><span><b>Not run</b>p95 core time</span><span><b>Not run</b>unique repeat key</span></div></div>
           </div>
         </details>
 
         <details id="business-case">
-          <summary><span>Business case & pilot</span><small>Replace assumptions with internal data</small></summary>
+          <summary><span>Value model and first pilot</span><small>Editable assumptions and pass or fail targets</small></summary>
           <div class="detail-content business-content">
-            <div class="business-intro"><div><h3>Transparent value model</h3><p>Every input is editable. Defaults are illustrative assumptions, not Amex forecasts or production results.</p></div><span class="soft-badge">Illustrative only</span></div>
-            <div class="calculator-grid">
-              <label>Eligible purchases / year<input id="annualPurchases" name="annual_purchases" type="number" min="0" step="10000" inputmode="numeric" autocomplete="off" value="1000000"></label>
-              <label>Avoidable wrong outcomes<input id="wrongOutcomeRate" name="wrong_outcome_rate" type="number" min="0" max="100" step="0.1" inputmode="decimal" autocomplete="off" value="1"><span>%</span></label>
-              <label>Cost per recovery<input id="recoveryCost" name="recovery_cost" type="number" min="0" step="1" inputmode="decimal" autocomplete="off" value="35"><span>$</span></label>
-              <label>Value lift / purchase<input id="valueLift" name="value_lift" type="number" min="0" step="0.1" inputmode="decimal" autocomplete="off" value="1.5"><span>$</span></label>
-              <label>Annual operating cost<input id="operatingCost" name="operating_cost" type="number" min="0" step="10000" inputmode="numeric" autocomplete="off" value="1000000"><span>$</span></label>
-            </div>
-            <div class="value-model-results"><div><span>Modeled gross value</span><strong id="grossValue">—</strong></div><div><span>Modeled net value</span><strong id="netValue">—</strong></div><div><span>Break-even value lift</span><strong id="breakEvenLift">—</strong></div></div>
-            <p class="formula-note">Gross value = avoided remediation cost + verified Membership value lift. Net value = gross value − operating cost. The model excludes conversion, retained spend, and brand effects until measured.</p>
-            <div class="pilot-gates"><h3>Hotel shadow pilot gates</h3><div><span>1</span><b>Coverage</b><small>≥90% material claims observable</small></div><div><span>2</span><b>Quality</b><small>≥90% mismatch detection; report false interventions</small></div><div><span>3</span><b>Member effort</b><small>≤1 question per purchase without higher abandonment</small></div><div><span>4</span><b>Operations</b><small>Measured p95, replay safety, and recovery time</small></div></div>
+            <div class="business-intro"><div><h3>Use approved inputs, not invented savings</h3><p>Every input is editable. Defaults show how the model works and are not Amex forecasts.</p></div><span class="soft-badge">Illustrative only</span></div>
+            <div class="calculator-grid"><label>Eligible purchases per year<input id="annualPurchases" name="annual_purchases" type="number" min="0" step="10000" inputmode="numeric" autocomplete="off" value="1000000"></label><label>Avoidable wrong outcomes<input id="wrongOutcomeRate" name="wrong_outcome_rate" type="number" min="0" max="100" step="0.1" inputmode="decimal" autocomplete="off" value="1"><span>%</span></label><label>Cost per recovery<input id="recoveryCost" name="recovery_cost" type="number" min="0" step="1" inputmode="decimal" autocomplete="off" value="35"><span>$</span></label><label>Value lift per purchase<input id="valueLift" name="value_lift" type="number" min="0" step="0.1" inputmode="decimal" autocomplete="off" value="1.5"><span>$</span></label><label>Annual operating cost<input id="operatingCost" name="operating_cost" type="number" min="0" step="10000" inputmode="numeric" autocomplete="off" value="1000000"><span>$</span></label></div>
+            <div class="value-model-results"><div><span>Modeled gross value</span><strong id="grossValue">Not calculated</strong></div><div><span>Modeled net value</span><strong id="netValue">Not calculated</strong></div><div><span>Break-even value lift</span><strong id="breakEvenLift">Not calculated</strong></div></div>
+            <p class="formula-note">Gross value = avoided recovery cost + verified Membership value. Net value = gross value - operating cost. Conversion and brand effects stay out until measured.</p>
+            <div class="pilot-gates"><h3>Hotel shadow-pilot targets</h3><div><span>1</span><b>Proof coverage</b><small>At least 90% of important facts visible</small></div><div><span>2</span><b>Detection</b><small>At least 90% of mismatches caught</small></div><div><span>3</span><b>Member effort</b><small>No more than 1 question on average</small></div><div><span>4</span><b>Operations</b><small>Measure speed, repeat safety, and recovery</small></div></div>
           </div>
         </details>
 
         <details>
-          <summary><span>Protocol boundary</span><small>ACE, AP2, UCP, ACP</small></summary>
-          <div class="detail-content"><p class="detail-intro">Outcome Assurance consumes protocol facts. It does not replace authorization, identity, mandates, credentials, checkout transport, or merchant order systems.</p><div class="protocol-table" role="table" aria-label="Protocol capability boundary"><div class="protocol-row header" role="row"><span>Rail</span><span>Provides</span><span>Outcome Assurance adds</span></div><div class="protocol-row" role="row"><b>Amex ACE</b><span>Enablement, intent, credentials; registration and cart context are developing</span><strong>Membership-aware outcome semantics and independent proof</strong></div><div class="protocol-row" role="row"><b>AP2</b><span>Mandates, receipts, and authorized constraints</span><strong>Task definition before payment and reconciliation after it</strong></div><div class="protocol-row" role="row"><b>UCP</b><span>Discovery, checkout, orders, fulfillment, post-purchase</span><strong>Portable success criteria across merchants</strong></div><div class="protocol-row" role="row"><b>ACP</b><span>Structured merchant catalog and commerce connectivity</span><strong>Approved meaning, value delta, verifier, and recovery</strong></div></div></div>
+          <summary><span>How it fits with ACE, AP2, UCP, and ACP</span><small>What existing systems provide and what this adds</small></summary>
+          <div class="detail-content"><p class="detail-intro">Outcome Assurance consumes trusted facts. It does not replace identity, permission, payment credentials, checkout, or merchant order systems.</p><div class="protocol-table" role="table" aria-label="Commerce system boundary"><div class="protocol-row header" role="row"><span>System</span><span>Already provides</span><span>This prototype adds</span></div><div class="protocol-row" role="row"><b>Amex ACE</b><span>Account enablement, intent, and credentials</span><strong>Member outcome definition and proof</strong></div><div class="protocol-row" role="row"><b>AP2</b><span>Permission, mandates, and payment audit trail</span><strong>Clear task before payment and result check after</strong></div><div class="protocol-row" role="row"><b>UCP</b><span>Discovery, checkout, orders, and fulfillment</span><strong>One success definition across merchants</strong></div><div class="protocol-row" role="row"><b>ACP</b><span>Structured merchant data and commerce connection</span><strong>Approved meaning, value difference, and recovery proof</strong></div></div></div>
         </details>
 
         <details id="bench">
-          <summary><span>OutcomeBench 2.0</span><small>Frozen synthetic evaluation</small></summary>
+          <summary><span>Test lab</span><small>24 fixed, made-up purchases</small></summary>
           <div class="detail-content bench-content">
-            <div class="bench-intro"><div><h3>24 frozen synthetic cases</h3><p>16 development cases, 8 bundled reference-holdout cases, adversarial failures, a prompt-only baseline, and Wilson 95% intervals. Both evaluators use the same harness.</p></div><div class="bench-actions"><a href="./bench/manifest-v2.json" target="_blank" rel="noreferrer">Inspect manifest</a><button class="button primary" id="runBench">Run benchmark</button></div></div>
-            <div class="bench-status"><span id="benchPulse"></span><b id="benchStatus">Ready to run</b><code id="benchHash">Dataset hash pending</code></div>
-            <div class="metric-grid" id="metricGrid"><article><span>Verified outcome rate</span><strong>—</strong></article><article><span>Violation detection</span><strong>—</strong></article><article><span>Questions per purchase</span><strong>—</strong></article><article><span>Verified value delta</span><strong>—</strong></article><article><span>Evidence completeness</span><strong>—</strong></article><article><span>Avoidable regret</span><strong>—</strong></article></div>
-            <div class="comparison-table"><div><span>Evaluator</span><b>Outcome Assurance</b><b>Prompt-only baseline</b></div><div><span>All cases</span><strong id="oaScore">—</strong><strong id="baselineScore">—</strong></div><div><span>Reference split</span><strong id="oaHoldout">—</strong><strong id="baselineHoldout">—</strong></div></div>
-            <p class="field-note">Synthetic reference results only. A production holdout must remain outside the deployable bundle.</p>
+            <div class="bench-intro"><div><h3>Does the same logic work beyond one demo?</h3><p>The lab runs 24 fixed cases through this system and a prompt-only comparison. It includes clean purchases, changed terms, missing proof, duplicate updates, and hostile merchant text.</p></div><div class="bench-actions"><a href="./bench/manifest-v2.json" target="_blank" rel="noreferrer">Inspect Test Manifest</a><button class="button primary" id="runBench">Run 24 Tests</button></div></div>
+            <div class="bench-status"><span id="benchPulse"></span><b id="benchStatus">Ready to run</b><code id="benchHash">Test-set fingerprint pending</code></div>
+            <div class="metric-grid" id="metricGrid"><article><span>Correct verdicts</span><strong>Not run</strong><small>All result types classified correctly</small></article><article><span>Bad outcomes caught</span><strong>Not run</strong><small>Known mismatches detected</small></article><article><span>Questions asked</span><strong>Not run</strong><small>Average per purchase</small></article><article><span>Verified value kept</span><strong>Not run</strong><small>Across correct synthetic cases</small></article><article><span>Complete proof</span><strong>Not run</strong><small>Cases with every required fact</small></article><article><span>Important questions missed</span><strong>Not run</strong><small>Lower is better</small></article></div>
+            <div class="comparison-table"><div><span>Approach</span><b>Outcome Assurance</b><b>Prompt-only agent</b></div><div><span>All 24 cases</span><strong id="oaScore">Not run</strong><strong id="baselineScore">Not run</strong></div><div><span>8 reference cases</span><strong id="oaHoldout">Not run</strong><strong id="baselineHoldout">Not run</strong></div></div>
+            <p class="field-note">These are small synthetic results. A production test must use a larger blind set owned by an independent reviewer.</p>
           </div>
+        </details>
+
+        <details id="research-2026">
+          <summary><span>Research behind the problem</span><small>Why clear meaning and independent proof matter</small></summary>
+          <div class="detail-content"><div class="research-list"><article><span>Decision stability</span><h3>Context can change an agent’s choice</h3><p>Wharton tested roughly 26,000 shopping runs and found that ordering, memory, and retrieval format could change selections.</p><a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noreferrer">Wharton Generative AI Labs</a></article><article><span>Customer trust</span><h3>Travelers still want trusted booking support</h3><p>Expedia’s 2026 survey found that 66% would not trust an AI assistant to book on their behalf.</p><a href="https://ir.expediagroup.com/news-and-events/news/news-details/2026/Expedia-Group-Reveals-The-AI-Trust-Gap-Travelers-Embrace-AI-for-Planning-but-Rely-on-Trusted-Brands-to-Book/" target="_blank" rel="noreferrer">Expedia Group</a></article><article><span>Competitor pattern</span><h3>Shopping assistants remember preferences</h3><p>Amazon’s assistant uses shopping history and conversational context for recommendations. Outcome Assurance focuses on explicit approval and proof after purchase.</p><a href="https://www.aboutamazon.com/news/retail/amazon-rufus-ai-assistant-personalized-shopping-features" target="_blank" rel="noreferrer">Amazon</a></article><article><span>Security</span><h3>Merchant text can try to redirect an agent</h3><p>Structured, approved fields stay separate from untrusted merchant language in this prototype.</p><a href="https://unit42.paloaltonetworks.com/retail-fraud-agentic-ai/" target="_blank" rel="noreferrer">Palo Alto Networks Unit 42</a></article></div></div>
         </details>
       </div>
     </section>
 
-    <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">Research & standards</h2><div class="source-links"><a href="https://www.americanexpress.com/en-us/newsroom/articles/innovation/american-express-debuts-agentic-commerce-experiences--ace--devel.html" target="_blank" rel="noreferrer">American Express ACE</a><a href="https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md" target="_blank" rel="noreferrer">Google AP2</a><a href="https://www.shopify.com/ucp" target="_blank" rel="noreferrer">Universal Commerce Protocol</a><a href="https://developers.openai.com/commerce" target="_blank" rel="noreferrer">Agentic Commerce Protocol</a><a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noreferrer">Agentic shopping stability</a><a href="https://corporate.visa.com/en/products/intelligent-commerce/earning-trust-report.html" target="_blank" rel="noreferrer">Visa consumer trust</a><a href="https://unit42.paloaltonetworks.com/retail-fraud-agentic-ai/" target="_blank" rel="noreferrer">Agentic commerce threats</a><a href="https://www.adr.org/press-releases/aaa-and-industry-leaders-launch-legal-protocol-for-agentic-commerce/" target="_blank" rel="noreferrer">Legal Context Protocol</a><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.800-2.ipd.pdf" target="_blank" rel="noreferrer">NIST benchmark practices</a><a href="https://aclanthology.org/2026.findings-acl.2028/" target="_blank" rel="noreferrer">Decision-aware clarification</a></div></section>
+    <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">Research and standards</h2><div class="source-links"><a href="https://www.americanexpress.com/en-us/company/agentic-commerce/" target="_blank" rel="noreferrer">American Express ACE</a><a href="https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md" target="_blank" rel="noreferrer">Google AP2</a><a href="https://www.shopify.com/ucp" target="_blank" rel="noreferrer">Universal Commerce Protocol</a><a href="https://developers.openai.com/commerce" target="_blank" rel="noreferrer">Agentic Commerce Protocol</a><a href="https://www.w3.org/WAI/WCAG2/supplemental/patterns/o3p01-clear-words/" target="_blank" rel="noreferrer">W3C Clear Words</a><a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noreferrer">Agentic Shopping Stability</a><a href="https://ir.expediagroup.com/news-and-events/news/news-details/2026/Expedia-Group-Reveals-The-AI-Trust-Gap-Travelers-Embrace-AI-for-Planning-but-Rely-on-Trusted-Brands-to-Book/" target="_blank" rel="noreferrer">Expedia AI Trust Gap</a><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.800-2.ipd.pdf" target="_blank" rel="noreferrer">NIST Benchmark Practices</a></div></section>
   </main>
 
   <footer><span>Outcome Assurance</span><p>Internal prototype · Synthetic data · No purchase is made</p></footer>
 
-  <dialog class="modal" id="jsonModal" aria-labelledby="jsonTitle"><div class="modal-heading"><div><p class="section-label">Portable object</p><h2 id="jsonTitle">Outcome contract JSON</h2></div><button class="icon-button" id="closeJson" aria-label="Close JSON dialog">×</button></div><pre><code id="jsonCode"></code></pre><div class="button-row"><button class="button secondary" id="copyJson">Copy JSON</button><button class="button primary" id="downloadJson">Download</button></div></dialog>
-  <dialog class="modal recovery-modal" id="recoveryDrawer" aria-labelledby="recoveryTitle"><div class="modal-heading"><div><p class="section-label">Recovery package</p><h2 id="recoveryTitle">Ready for servicing</h2></div><button class="icon-button" id="closeRecovery" aria-label="Close recovery package">×</button></div><div class="recovery-items" id="recoveryItems"></div><p class="recovery-summary" id="recoverySummary"></p><div class="button-row"><button class="button primary" id="downloadRecovery">Download proof bundle</button></div></dialog>
+  <dialog class="modal" id="jsonModal" aria-labelledby="jsonTitle"><div class="modal-heading"><div><p class="section-label">Machine-readable version</p><h2 id="jsonTitle">The Same Approval as JSON</h2><p>A system can carry this version between agents, merchants, and the independent checker.</p></div><button class="icon-button" id="closeJson" aria-label="Close machine version">×</button></div><pre><code id="jsonCode"></code></pre><div class="button-row"><button class="button secondary" id="copyJson">Copy JSON</button><button class="button primary" id="downloadJson">Download JSON</button></div></dialog>
+  <dialog class="modal recovery-modal" id="recoveryDrawer" aria-labelledby="recoveryTitle"><div class="modal-heading"><div><p class="section-label">Support package</p><h2 id="recoveryTitle">The Facts Are Ready</h2><p>Support receives the request, approval, updates, exact mismatch, and technical fingerprints.</p></div><button class="icon-button" id="closeRecovery" aria-label="Close support package">×</button></div><div class="recovery-items" id="recoveryItems"></div><p class="recovery-summary" id="recoverySummary"></p><div class="button-row"><button class="button primary" id="downloadRecovery">Download Proof Package</button></div></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=6" defer></script>
+  <script src="./app.js?v=7" defer></script>
 </body>
 </html>

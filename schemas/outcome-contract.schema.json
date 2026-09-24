@@ -23,9 +23,10 @@
     "decision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["selected_candidate_id", "selected_merchant_id", "approved_total_usd", "expected_member_value_usd", "effective_cost_usd", "next_best_value_delta_usd"],
+      "required": ["selected_candidate_id", "selected_provider_id", "approved_total_usd", "expected_member_value_usd", "effective_cost_usd", "next_best_value_delta_usd"],
       "properties": {
         "selected_candidate_id": {"type": "string"},
+        "selected_provider_id": {"type": "string"},
         "selected_merchant_id": {"type": "string"},
         "approved_total_usd": {"type": "number", "minimum": 0},
         "expected_member_value_usd": {"type": "number", "minimum": 0},
